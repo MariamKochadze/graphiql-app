@@ -3,6 +3,7 @@
 import { Footer } from '@components/Footer/Footer.component';
 import { Header } from '@components/Header/Header.component';
 import { Metadata } from 'next/types';
+import StoreProvider from './StoreProvider';
 
 export const metadata: Metadata = {
   title: 'Rest/graphql client app',
@@ -18,9 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="wrapper">
-          <Header />
-          {children}
-          <Footer />
+          <StoreProvider>
+            <Header />
+            {children}
+            <Footer />
+          </StoreProvider>
         </div>
       </body>
     </html>
