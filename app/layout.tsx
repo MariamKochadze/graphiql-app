@@ -1,27 +1,8 @@
-/* eslint-disable react-refresh/only-export-components */
-import { Footer } from '@components/Footer/Footer.component';
-import { Header } from '@components/Header/Header.components';
-import { Metadata } from 'next/types';
+import React from 'react';
+import './styles/global.css';
 
-export const metadata: Metadata = {
-  title: 'Rest/graphql client app',
-  description: 'RS School React Task',
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body>
-        <div className="wrapper">
-          <Header />
-          {children}
-          <Footer />
-        </div>
-      </body>
-    </html>
-  );
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  {
+    return children;
+  }
 }
