@@ -1,12 +1,18 @@
+/* eslint-disable react-refresh/only-export-components */
 import RestPage from '@components/RestFull-client/restPage';
+import Params from '@components/RestFull-client/params';
 import { Metadata } from 'next/types';
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
   title: 'REST-Full Client',
   description: 'RS School React Task',
 };
 
 export default function Page() {
-  return <RestPage />;
+  return (
+    <>
+      <RestPage />
+      <Params />
+    </>
+  );
 }
