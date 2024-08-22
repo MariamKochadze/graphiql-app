@@ -1,7 +1,7 @@
 import ParticipantsCard from '@components/ParticipantsCard/Card';
 import { useTranslations } from 'next-intl';
 import { StaticImageData } from 'next/image';
-// import MariamImg from '../../public/assets/Mariam.webp';
+import MariamImg from '../../public/assets/Mariam.jpg';
 import VictoriaImg from '../../public/assets/Victoria.jpeg';
 
 interface Participant {
@@ -17,7 +17,7 @@ const Participants = () => {
   const participants: Participant[] = [
     {
       id: 1,
-      img: 'MariamImg',
+      img: MariamImg,
       name: 'Mariam Kochadze',
       position: t('Participant1Position'),
       detail: t('Participant1Description'),
