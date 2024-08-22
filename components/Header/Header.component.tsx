@@ -23,7 +23,10 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className={isSticky ? 'scrolled py-5 bg-regal-blue sticky top-0 left-0 mb-20' : ' py-5'}>
+    <header
+      data-testid="header"
+      className={isSticky ? 'scrolled py-5 bg-regal-blue sticky top-0 left-0 mb-20' : ' py-5'}
+    >
       <div className="container flex justify-between items-center">
         <Link href="/">
           <svg xmlns="http://www.w3.org/2000/svg" width="109" height="32" fill="none">
