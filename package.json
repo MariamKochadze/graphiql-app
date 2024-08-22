@@ -20,7 +20,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.2.6",
+    "@reduxjs/toolkit": "^2.2.7",
     "@svgr/webpack": "^8.1.0",
     "@types/react-redux": "^7.1.33",
     "next": "^14.2.5",
@@ -61,7 +61,7 @@
     "next-redux-wrapper": "^8.1.0",
     "next-router-mock": "^0.9.13",
     "prettier": "^3.3.2",
-    "sass": "^1.77.6",
+    "sass": "^1.77.8",
     "stylelint": "^16.6.1",
     "stylelint-config-clean-order": "^5.4.2",
     "stylelint-config-standard-scss": "^13.1.0",

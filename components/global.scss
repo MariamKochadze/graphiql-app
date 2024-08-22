@@ -1,0 +1,13 @@
+$purple: #b19af3;
+$gray: #eaecf0;
+$white: #fff;
+$black: #000;
+$text-color: #344054;
+
+:root {
+  --color-purple: #{$purple};
+  --color-gray: #{$gray};
+  --color-white: #{$white};
+  --color-black: #{$black};
+  --color-text: #{$text-color};
+}

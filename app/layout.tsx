@@ -1,8 +1,9 @@
-/* eslint-disable react-refresh/only-export-components */
 import { Footer } from '@components/Footer/Footer.component';
-import { Header } from '@components/Header/Header.components';
+import { Header } from '@components/Header/Header.component';
 import { Metadata } from 'next/types';
+import '@components/global.scss';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
   title: 'Rest/graphql client app',
   description: 'RS School React Task',
