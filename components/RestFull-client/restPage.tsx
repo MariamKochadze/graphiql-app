@@ -15,7 +15,7 @@ export default function RestPage() {
   return (
     <Box className={styles.restful}>
       <div>
-        <Image src="/svg/link.svg" alt="URL" className={styles.img} /> {value}
+        <Image src="/svg/link.svg" alt="URL" className={styles.img} width={20} height={20} /> {value}
       </div>
       <form className={styles.form}>
         <div className={styles.container}>

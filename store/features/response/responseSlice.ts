@@ -5,6 +5,7 @@ const initialState: ResponseState = {
   url: '',
   method: 'GET',
   headers: {},
+  query: {},
   body: '',
   response: '',
   status: 0,
@@ -19,8 +20,21 @@ const responseSlice = createSlice({
     setNewUrl: (state, actions: PayloadAction<string>) => {
       state.url = actions.payload;
     },
+    setNewHeaders: (state, actions: PayloadAction<Record<string, string>>) => {
+      state.headers[actions.payload.key] = actions.payload.value;
+    },
+    deleteNewHeaders: (state, actions: PayloadAction<string>) => {
+      delete state.headers[actions.payload];
+    },
+
+    setNewQuery: (state, actions: PayloadAction<Record<string, string>>) => {
+      state.query[actions.payload.key] = actions.payload.value;
+    },
+    deleteQuery: (state, actions: PayloadAction<string>) => {
+      delete state.query[actions.payload];
+    },
   },
 });
 
-export const { setNewUrl } = responseSlice.actions;
+export const { setNewUrl, setNewHeaders, deleteNewHeaders, setNewQuery, deleteQuery } = responseSlice.actions;
 export const responseReducer = responseSlice.reducer;
