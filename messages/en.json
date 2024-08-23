@@ -1,7 +1,8 @@
 {
   "HomePage": {
     "title": "See why teams choose \n Apidog over Postman.",
-    "welcome": "Welcome!",
+    "welcome": "Welcome",
+    "welcome-back": "Welcome Back",
     "aboutProjectTitle": "About Project",
     "aboutProject": "This project playground was created as part of the final task for the RS School GraphQL course. It utilizes GraphiQL, which offers a comprehensive and clear description of the data available in the API. This interface allows you to query exactly the data you need, ensuring efficiency and precision, while also enabling powerful developer tools to enhance your GraphQL experience.",
     "aboutCourseTitle": "About Course",
@@ -17,6 +18,10 @@
     "english-value": "English",
     "russian-value": "Russian",
     "sign-in": "Sign In",
-    "sign-up": "Sign Up"
+    "sign-up": "Sign Up",
+    "sign-out": "Sign Out",
+    "rest-client": "REST Client",
+    "graphiql-client": "GraphiQL Client",
+    "history": "History"
   }
 }

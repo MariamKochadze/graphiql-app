@@ -2,7 +2,9 @@
 import LocaleSwitcher from '@components/LocaleSwitcher/LocaleSwitcher';
 import Button from '@mui/material/Button';
 import { useTranslations } from 'next-intl';
+// import { useAppSelector } from '../../hooks/useStoreHooks';
 import { Link } from '../../navigation';
+// import { selectUser } from '../../store/selectors/index';
 
 import { useEffect, useState } from 'react';
 
@@ -10,6 +12,7 @@ export const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
 
   const t = useTranslations('HomePage');
+  // const user = useAppSelector(selectUser);
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
@@ -22,6 +25,14 @@ export const Header = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // const handleSignOut = async () => {
+  //   try {
+  //     await signOutUser();
+  //   } catch (error) {
+  //     console.error('Error', error);
+  //   }
+  // };
 
   return (
     <header
@@ -99,6 +110,8 @@ export const Header = () => {
             <li>
               <LocaleSwitcher isSticky={isSticky} />
             </li>
+            {/* {!user ? (
+              <> */}
             <li>
               <Link href="/authentication">
                 <Button variant="contained">{t('sign-in')}</Button>
@@ -109,6 +122,10 @@ export const Header = () => {
                 <Button variant="contained">{t('sign-up')}</Button>
               </Link>
             </li>
+            {/* </>
+            ) : ( 
+              <Button variant="contained" onClick={handleSignOut}>{t('sign-out')}</Button>
+            )} */}
           </ul>
         </nav>
       </div>
