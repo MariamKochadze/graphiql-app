@@ -2,7 +2,8 @@
 import LocaleSwitcher from '@components/LocaleSwitcher/LocaleSwitcher';
 import Button from '@mui/material/Button';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link } from '../../navigation';
+
 import { useEffect, useState } from 'react';
 
 export const Header = () => {
@@ -25,7 +26,7 @@ export const Header = () => {
   return (
     <header
       data-testid="header"
-      className={isSticky ? 'scrolled py-5 bg-regal-blue sticky top-0 left-0 mb-20' : ' py-5'}
+      className={isSticky ? 'scrolled py-5 bg-regal-blue sticky top-0 left-0 mb-20 z-40' : ' py-5'}
     >
       <div className="container flex justify-between items-center">
         <Link href="/">
@@ -99,12 +100,12 @@ export const Header = () => {
               <LocaleSwitcher isSticky={isSticky} />
             </li>
             <li>
-              <Link href="/signin">
+              <Link href="/authentication">
                 <Button variant="contained">{t('sign-in')}</Button>
               </Link>
             </li>
             <li>
-              <Link href="/signup">
+              <Link href="/authentication">
                 <Button variant="contained">{t('sign-up')}</Button>
               </Link>
             </li>

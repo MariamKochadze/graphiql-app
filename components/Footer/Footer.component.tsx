@@ -16,7 +16,7 @@ const participantGithubLink = [
 ];
 
 export const Footer = () => (
-  <footer className="bg-regal-blue py-10">
+  <footer className="bg-regal-blue py-6">
     <div className="container">
       <div className="flex justify-between">
         <div className="flex">

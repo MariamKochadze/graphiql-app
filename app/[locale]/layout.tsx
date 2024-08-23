@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Poppins } from 'next/font/google';
 import { Metadata } from 'next/types';
+import StoreProvider from '../StoreProvider';
 import '../styles/global.css';
 
 const poppins = Poppins({
@@ -31,9 +32,11 @@ export default async function RootLayout({ children, params: { locale } }: Reado
     <html lang={locale}>
       <body className="bg-body-bg">
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className={`${poppins.className}`}>{children}</main>
-          <Footer />
+          <StoreProvider>
+            <Header />
+            <main className={`${poppins.className}`}>{children}</main>
+            <Footer />
+          </StoreProvider>
         </NextIntlClientProvider>
       </body>
     </html>

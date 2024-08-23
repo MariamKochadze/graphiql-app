@@ -11,10 +11,10 @@ const HomeSection = () => {
             {t('welcome')}
           </h2>
           <div className="flex justify-center gap-5">
-            <Link href="/signin">
+            <Link href="/authentication">
               <Button variant="contained">{t('sign-in')}</Button>
             </Link>
-            <Link href="/signup">
+            <Link href="/authentication">
               <Button variant="outlined">{t('sign-up')}</Button>
             </Link>
           </div>
