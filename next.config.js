@@ -1,8 +1,11 @@
 import path from 'path';
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
 
 const stylesPath = path.resolve('styles');
 
-export default {
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
@@ -52,3 +55,4 @@ export default {
     prependData: `@import "mixins.scss"; @import "placeholders.scss"; @import "constants.scss";`,
   },
 };
+export default withNextIntl(nextConfig);
