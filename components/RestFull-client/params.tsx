@@ -1,9 +1,9 @@
 'use client';
-import { useState } from 'react';
-import english from './english.json';
 import { Box, Tab, Tabs } from '@mui/material';
-import Body from './ParamsFolder/body';
-import Headers from './ParamsFolder/headers';
+import { useState } from 'react';
+import Body from '../ParamsFolder/body';
+import Headers from '../ParamsFolder/headers';
+import english from './english.json';
 import styles from './Restfull.module.scss';
 export default function Params() {
   const [selectParam, setSelectParam] = useState<'Headers' | 'Body'>('Headers');

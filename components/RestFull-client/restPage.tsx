@@ -1,15 +1,14 @@
 'use client';
-import { METHODS } from '../../app/common/constants';
-import styles from './Restfull.module.scss';
-import { Button, Box, Select, MenuItem, Typography } from '@mui/material';
-import { useAppSelector } from '../../hooks/useStoreHooks';
-import english from './english.json';
+import { Box, Button, MenuItem, Select, Typography } from '@mui/material';
 import Image from 'next/image';
-import { useAppDispatch } from '../../hooks/useStoreHooks';
-import { setNewUrl, setNewMethod } from 'store/features/response/responseSlice';
-import { useState } from 'react';
-import { base64Route } from './RestfullRoute/Base64Route';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { setNewMethod, setNewUrl } from 'store/features/response/responseSlice';
+import { METHODS } from '../../app/common/constants';
+import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
+import { base64Route } from '../Base64Route/Base64Route';
+import english from './english.json';
+import styles from './Restfull.module.scss';
 export default function RestPage() {
   const { method, url } = useAppSelector(state => state.response);
   const { response } = useAppSelector(state => state);

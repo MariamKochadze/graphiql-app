@@ -1,21 +1,21 @@
 'use client';
-import english from '../english.json';
-import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
-import { setNewHeaders, deleteNewHeaders } from '../../../store/features/response/responseSlice';
+import { HEADERS } from '@app/common/constants';
 import {
   Box,
   Button,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableContainer,
   Typography,
 } from '@mui/material';
+import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
 import { useRef } from 'react';
-import { HEADERS } from '@app/common/constants';
-import styles from '../Restfull.module.scss';
+import { deleteNewHeaders, setNewHeaders } from '../../store/features/response/responseSlice';
+import english from '../RestFull-client/english.json';
+import styles from '../RestFull-client/Restfull.module.scss';
 
 export default function Headers() {
   const { headers } = useAppSelector(state => state.response);

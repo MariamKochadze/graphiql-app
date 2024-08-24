@@ -1,19 +1,19 @@
 'use client';
-import english from '../english.json';
-import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
-import { setNewQuery, deleteQuery } from '../../../store/features/response/responseSlice';
 import {
   Box,
   Button,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableContainer,
   Typography,
 } from '@mui/material';
+import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
 import { useRef } from 'react';
+import { deleteQuery, setNewQuery } from '../../store/features/response/responseSlice';
+import english from '../RestFull-client/english.json';
 import styles from '../Restfull.module.scss';
 
 export default function Query() {

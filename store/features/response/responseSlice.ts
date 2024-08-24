@@ -36,9 +36,13 @@ const responseSlice = createSlice({
     deleteQuery: (state, actions: PayloadAction<string>) => {
       delete state.query[actions.payload];
     },
+
+    setNewBody: (state, actions: PayloadAction<string>) => {
+      state.body = actions.payload;
+    },
   },
 });
 
-export const { setNewUrl, setNewHeaders, deleteNewHeaders, setNewQuery, deleteQuery, setNewMethod } =
+export const { setNewUrl, setNewHeaders, deleteNewHeaders, setNewQuery, deleteQuery, setNewMethod, setNewBody } =
   responseSlice.actions;
 export const responseReducer = responseSlice.reducer;
