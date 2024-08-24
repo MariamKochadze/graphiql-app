@@ -2,7 +2,17 @@
 import english from '../english.json';
 import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
 import { setNewQuery, deleteQuery } from '../../../store/features/response/responseSlice';
-import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow, TableContainer } from '@mui/material';
+import {
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableContainer,
+  Typography,
+} from '@mui/material';
 import { useRef } from 'react';
 import styles from '../Restfull.module.scss';
 
@@ -25,11 +35,27 @@ export default function Query() {
   }
 
   return (
-    <Box sx={{ height: 250, overflowY: 'scroll', display: 'flex', flexDirection: 'column', gap: 1 }}>
+    <Box
+      sx={{
+        height: 250,
+        overflowY: 'scroll',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1,
+        borderTop: '1px solid var(--color-gray)',
+      }}
+    >
+      <Typography sx={{ color: 'var(--color-purple)' }}>
+        {english.params.query} {english.params.params}
+      </Typography>
       <form onSubmit={setHeaders} className={styles['form-container']}>
         <input type="text" placeholder={english.key} ref={inputKey} required className={styles['input-text']} />
         <input type="text" placeholder={english.value} ref={inputValue} required className={styles['input-text']} />
-        <Button variant="text" type="submit" sx={{ color: 'var(--color-purple)' }}>
+        <Button
+          variant="text"
+          type="submit"
+          sx={{ color: 'var(--color-purple)', border: '1px solid var(--color-purple)' }}
+        >
           {english.buttonAdd}
         </Button>
       </form>

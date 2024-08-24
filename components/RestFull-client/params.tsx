@@ -4,10 +4,9 @@ import english from './english.json';
 import { Box, Tab, Tabs } from '@mui/material';
 import Body from './ParamsFolder/body';
 import Headers from './ParamsFolder/headers';
-import Query from './ParamsFolder/query';
 import styles from './Restfull.module.scss';
 export default function Params() {
-  const [selectParam, setSelectParam] = useState<'Headers' | 'Body' | 'Query'>('Query');
+  const [selectParam, setSelectParam] = useState<'Headers' | 'Body'>('Headers');
   return (
     <Box className={styles.params}>
       <Tabs
@@ -16,12 +15,10 @@ export default function Params() {
         textColor="secondary"
         indicatorColor="secondary"
       >
-        <Tab value="Query" label={english.params.query} />
         <Tab value="Body" label={english.params.body} />
         <Tab value="Headers" label={english.params.headers} />
       </Tabs>
       <div>
-        {selectParam === 'Query' && <Query />}
         {selectParam === 'Body' && <Body />}
         {selectParam === 'Headers' && <Headers />}
       </div>

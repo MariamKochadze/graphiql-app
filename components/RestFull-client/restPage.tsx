@@ -1,27 +1,48 @@
 'use client';
 import { METHODS } from '../../app/common/constants';
 import styles from './Restfull.module.scss';
-import { Button, Box, Select, MenuItem } from '@mui/material';
+import { Button, Box, Select, MenuItem, Typography } from '@mui/material';
 import { useAppSelector } from '../../hooks/useStoreHooks';
 import english from './english.json';
 import Image from 'next/image';
-// import { useAppDispatch } from '../../hooks/useStoreHooks';
-// import { setNewUrl } from 'store/features/response/responseSlice';
+import { useAppDispatch } from '../../hooks/useStoreHooks';
+import { setNewUrl, setNewMethod } from 'store/features/response/responseSlice';
 import { useState } from 'react';
+import { base64Route } from './RestfullRoute/Base64Route';
+import { useRouter } from 'next/navigation';
 export default function RestPage() {
   const { method, url } = useAppSelector(state => state.response);
-  const [value, setValue] = useState(url);
-  // const dispatch = useAppDispatch();
+  const { response } = useAppSelector(state => state);
+  const dispatch = useAppDispatch();
+  const [inputMethod, setInputMethod] = useState<string>(method);
+  const [inputUrl, setInputUrl] = useState<string>(url);
+  const router = useRouter();
+
+  function submitForm(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    dispatch(setNewUrl(inputUrl || ''));
+    dispatch(setNewMethod(inputMethod || ''));
+    const data = {
+      ...response,
+      method: inputMethod,
+      url: inputUrl,
+    };
+    const route = base64Route(data);
+    router.push(route);
+  }
   return (
     <Box className={styles.restful}>
-      <div>
-        <Image src="/svg/link.svg" alt="URL" className={styles.img} width={20} height={20} /> {value}
-      </div>
-      <form className={styles.form}>
+      <Box sx={{ display: 'flex', gap: 1 }}>
+        <Image src="/svg/link.svg" alt="URL" width={30} height={30} />
+        <Typography variant="body1">{url}</Typography>
+      </Box>
+      <form className={styles.form} onSubmit={submitForm}>
         <div className={styles.container}>
           <Select
             defaultValue={method}
             name="method"
+            value={inputMethod}
+            onChange={e => setInputMethod(e.target.value)}
             id="select"
             sx={{
               width: '120px',
@@ -40,8 +61,9 @@ export default function RestPage() {
             type="text"
             name="url"
             placeholder="https://example.com"
-            value={value}
-            onChange={e => setValue(e.target.value)}
+            required
+            value={inputUrl}
+            onChange={e => setInputUrl(e.target.value)}
           />
         </div>
         <Button

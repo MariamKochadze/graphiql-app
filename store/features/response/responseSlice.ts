@@ -20,6 +20,9 @@ const responseSlice = createSlice({
     setNewUrl: (state, actions: PayloadAction<string>) => {
       state.url = actions.payload;
     },
+    setNewMethod: (state, actions: PayloadAction<string>) => {
+      state.method = actions.payload;
+    },
     setNewHeaders: (state, actions: PayloadAction<Record<string, string>>) => {
       state.headers[actions.payload.key] = actions.payload.value;
     },
@@ -36,5 +39,6 @@ const responseSlice = createSlice({
   },
 });
 
-export const { setNewUrl, setNewHeaders, deleteNewHeaders, setNewQuery, deleteQuery } = responseSlice.actions;
+export const { setNewUrl, setNewHeaders, deleteNewHeaders, setNewQuery, deleteQuery, setNewMethod } =
+  responseSlice.actions;
 export const responseReducer = responseSlice.reducer;

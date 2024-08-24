@@ -7,6 +7,7 @@
   "params": {
     "headers": "Headers",
     "body": "Body",
-    "query": "Query"
+    "query": "Query",
+    "params": "Params"
   }
 }
