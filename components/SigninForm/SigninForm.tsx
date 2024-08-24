@@ -2,6 +2,7 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { User } from 'firebase/auth';
 import { useAppDispatch } from 'hooks/useStoreHooks';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { setUser } from 'store/userSlice';
@@ -29,6 +30,7 @@ const SignInForm = () => {
   const [errors, setErrors] = useState<SignInFormErrors>({});
   const { email, password } = formFields;
   const router = useRouter();
+  const t = useTranslations('Signin');
 
   const dispatch = useAppDispatch();
 
@@ -68,14 +70,14 @@ const SignInForm = () => {
   return (
     <Box className="sign-in-container" sx={{ width: '100%', maxWidth: 360, mx: 'auto', p: 2 }}>
       <Typography variant="h5" gutterBottom>
-        Already have an account?
+        {t('sign-in-text')}
       </Typography>
       <Typography variant="body1" gutterBottom>
-        Sign in with your email and password
+        {t('sign-in-info')}
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
-          label="Email"
+          label={t('email')}
           type="email"
           required
           onChange={handleChange}
@@ -87,7 +89,7 @@ const SignInForm = () => {
           margin="normal"
         />
         <TextField
-          label="Password"
+          label={t('password')}
           type="password"
           required
           onChange={handleChange}
@@ -98,11 +100,9 @@ const SignInForm = () => {
           fullWidth
           margin="normal"
         />
-        <Box className="buttons-container" sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-          <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
-            Sign In
-          </Button>
-        </Box>
+        <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
+          {t('sign-in')}
+        </Button>
       </form>
     </Box>
   );

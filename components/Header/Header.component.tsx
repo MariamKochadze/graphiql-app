@@ -1,18 +1,21 @@
 'use client';
 import LocaleSwitcher from '@components/LocaleSwitcher/LocaleSwitcher';
 import Button from '@mui/material/Button';
+import { setUser } from '@store/userSlice';
+import { onAuthStateChangedListener, signOutUser } from '@utils/firebase/firebase.utils';
+import { User } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
-// import { useAppSelector } from '../../hooks/useStoreHooks';
-import { Link } from '../../navigation';
-// import { selectUser } from '../../store/selectors/index';
-
 import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
+import { Link } from '../../navigation';
+import { selectUser } from '../../store/selectors/index';
 
 export const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
+  const dispatch = useAppDispatch();
 
   const t = useTranslations('HomePage');
-  // const user = useAppSelector(selectUser);
+  const user = useAppSelector(selectUser);
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
@@ -26,14 +29,17 @@ export const Header = () => {
     };
   }, []);
 
-  // const handleSignOut = async () => {
-  //   try {
-  //     await signOutUser();
-  //   } catch (error) {
-  //     console.error('Error', error);
-  //   }
-  // };
+  const handleSignOut = async () => {
+    await signOutUser();
+  };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user: User | null) => {
+      dispatch(setUser(user));
+    });
+
+    return () => unsubscribe();
+  }, [dispatch]);
   return (
     <header
       data-testid="header"
@@ -110,22 +116,24 @@ export const Header = () => {
             <li>
               <LocaleSwitcher isSticky={isSticky} />
             </li>
-            {/* {!user ? (
-              <> */}
-            <li>
-              <Link href="/authentication">
-                <Button variant="contained">{t('sign-in')}</Button>
-              </Link>
-            </li>
-            <li>
-              <Link href="/authentication">
-                <Button variant="contained">{t('sign-up')}</Button>
-              </Link>
-            </li>
-            {/* </>
-            ) : ( 
-              <Button variant="contained" onClick={handleSignOut}>{t('sign-out')}</Button>
-            )} */}
+            {!user ? (
+              <>
+                <li>
+                  <Link href="/authentication">
+                    <Button variant="contained">{t('sign-in')}</Button>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/authentication">
+                    <Button variant="contained">{t('sign-up')}</Button>
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <Button variant="contained" onClick={handleSignOut}>
+                {t('sign-out')}
+              </Button>
+            )}
           </ul>
         </nav>
       </div>
