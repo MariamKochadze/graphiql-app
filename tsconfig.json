@@ -15,7 +15,10 @@
       "@components/*": ["components/*"],
       "@public/*": ["public/*"],
       "@testSetup/*": ["testSetup/*"],
-      "@app/*": ["app/*"]
+      "@app/*": ["app/*"],
+      "@hooks/*": ["hooks/*"],
+      "@store/*": ["store/*"],
+      "@utils/*": ["utils/*"]
     },
     "strict": false,
     "incremental": true,

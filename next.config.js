@@ -1,8 +1,11 @@
 import path from 'path';
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
 
 const stylesPath = path.resolve('styles');
 
-export default {
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
@@ -51,3 +54,4 @@ export default {
     includePaths: [stylesPath],
   },
 };
+export default withNextIntl(nextConfig);

@@ -21,8 +21,9 @@ export default defineConfig({
       '@public': join(__dirname, 'public'),
       '@testSetup': join(__dirname, 'testSetup'),
       '@app': join(__dirname, 'app'),
-      '@store': join(__dirname, 'store'),
       '@hooks': join(__dirname, 'hooks'),
+      '@store': join(__dirname, 'store'),
+      '@utils': join(__dirname, 'utils'),
     },
   },
   resolve: {
