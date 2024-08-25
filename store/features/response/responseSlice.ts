@@ -40,9 +40,21 @@ const responseSlice = createSlice({
     setNewBody: (state, actions: PayloadAction<string>) => {
       state.body = actions.payload;
     },
+
+    setNewResponse: (state, actions: PayloadAction<ResponseState>) => {
+      return actions.payload;
+    },
   },
 });
 
-export const { setNewUrl, setNewHeaders, deleteNewHeaders, setNewQuery, deleteQuery, setNewMethod, setNewBody } =
-  responseSlice.actions;
+export const {
+  setNewUrl,
+  setNewHeaders,
+  deleteNewHeaders,
+  setNewQuery,
+  deleteQuery,
+  setNewMethod,
+  setNewBody,
+  setNewResponse,
+} = responseSlice.actions;
 export const responseReducer = responseSlice.reducer;

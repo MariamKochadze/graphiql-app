@@ -2,7 +2,6 @@
 import { Box, Button, MenuItem, Select, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { setNewMethod, setNewUrl } from 'store/features/response/responseSlice';
 import { METHODS } from '../../app/common/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
@@ -13,20 +12,11 @@ export default function RestPage() {
   const { method, url } = useAppSelector(state => state.response);
   const { response } = useAppSelector(state => state);
   const dispatch = useAppDispatch();
-  const [inputMethod, setInputMethod] = useState<string>(method);
-  const [inputUrl, setInputUrl] = useState<string>(url);
   const router = useRouter();
 
   function submitForm(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    dispatch(setNewUrl(inputUrl || ''));
-    dispatch(setNewMethod(inputMethod || ''));
-    const data = {
-      ...response,
-      method: inputMethod,
-      url: inputUrl,
-    };
-    const route = base64Route(data);
+    const route = base64Route(response);
     router.push(route);
   }
   return (
@@ -38,10 +28,9 @@ export default function RestPage() {
       <form className={styles.form} onSubmit={submitForm}>
         <div className={styles.container}>
           <Select
-            defaultValue={method}
+            value={method}
             name="method"
-            value={inputMethod}
-            onChange={e => setInputMethod(e.target.value)}
+            onChange={e => dispatch(setNewMethod(e.target.value))}
             id="select"
             sx={{
               width: '120px',
@@ -61,8 +50,8 @@ export default function RestPage() {
             name="url"
             placeholder="https://example.com"
             required
-            value={inputUrl}
-            onChange={e => setInputUrl(e.target.value)}
+            value={url}
+            onChange={e => dispatch(setNewUrl(e.target.value))}
           />
         </div>
         <Button
