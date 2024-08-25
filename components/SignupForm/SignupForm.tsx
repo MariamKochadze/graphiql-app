@@ -1,6 +1,10 @@
 'use client';
+import { useAppDispatch } from '@hooks/useStoreHooks';
 import { Box, Button, TextField, Typography } from '@mui/material';
-import { UserCredential } from 'firebase/auth';
+import { setUser } from '@store/userSlice';
+import { User, UserCredential } from 'firebase/auth';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from 'utils/firebase/firebase.utils';
 import { ValidationError } from 'yup';
@@ -32,6 +36,9 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState<FormFields>(defaultFormFields);
   const [errors, setErrors] = useState<FormErrors>({});
   const { displayName, email, password, confirmPassword } = formFields;
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const t = useTranslations('Signup');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -51,7 +58,11 @@ const SignUpForm = () => {
       );
 
       if (userCredentials) {
-        await createUserDocumentFromAuth(userCredentials?.user, { displayName });
+        const user: User = userCredentials.user;
+        await createUserDocumentFromAuth(user, { displayName });
+
+        dispatch(setUser(user));
+        router.push('/');
       }
     } catch (error) {
       if (error instanceof ValidationError) {
@@ -62,7 +73,6 @@ const SignUpForm = () => {
           }
         });
         setErrors(newErrors);
-      } else {
       }
     }
   };
@@ -70,14 +80,14 @@ const SignUpForm = () => {
   return (
     <Box className="sign-up-container" sx={{ width: '100%', maxWidth: 400, mx: 'auto', p: 3 }}>
       <Typography variant="h5" gutterBottom>
-        Don't have an account?
+        {t('signup-text')}
       </Typography>
       <Typography variant="body1" gutterBottom>
-        Sign up with your email and password
+        {t('sign-up-info')}
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
-          label="Display Name"
+          label={t('name')}
           type="text"
           required
           onChange={handleChange}
@@ -90,7 +100,7 @@ const SignUpForm = () => {
         />
 
         <TextField
-          label="Email"
+          label={t('email')}
           type="email"
           required
           onChange={handleChange}
@@ -103,7 +113,7 @@ const SignUpForm = () => {
         />
 
         <TextField
-          label="Password"
+          label={t('password')}
           type="password"
           required
           onChange={handleChange}
@@ -116,7 +126,7 @@ const SignUpForm = () => {
         />
 
         <TextField
-          label="Confirm Password"
+          label={t('confirm-password')}
           type="password"
           required
           onChange={handleChange}
@@ -129,7 +139,7 @@ const SignUpForm = () => {
         />
 
         <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>
-          Sign Up
+          {t('sign-up')}
         </Button>
       </form>
     </Box>
