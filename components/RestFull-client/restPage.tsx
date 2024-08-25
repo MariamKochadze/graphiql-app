@@ -1,32 +1,40 @@
 'use client';
-import { Box, Button, MenuItem, Select, Typography } from '@mui/material';
-import Image from 'next/image';
+import { Box, Button, MenuItem, Select } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { setNewMethod, setNewUrl } from 'store/features/response/responseSlice';
 import { METHODS } from '../../app/common/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { base64Route } from '../Base64Route/Base64Route';
-import english from './english.json';
-import styles from './Restfull.module.scss';
+import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { selectUser } from '@store/selectors';
+import { useEffect } from 'react';
 export default function RestPage() {
+  const t = useTranslations('RestClient');
   const { method, url } = useAppSelector(state => state.response);
   const { response } = useAppSelector(state => state);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const pathname = usePathname();
+  const user = useAppSelector(selectUser);
+
+  useEffect(() => {
+    if (!user) {
+      const lang = pathname.split('/')[1];
+      router.push(`/${lang}/authentication`);
+    }
+  }, [user, router]);
 
   function submitForm(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const route = base64Route(response);
-    router.push(route);
+    const lang = pathname.split('/')[1];
+    router.push(`/${lang}${route}`);
   }
-  return (
-    <Box className={styles.restful}>
-      <Box sx={{ display: 'flex', gap: 1 }}>
-        <Image src="/svg/link.svg" alt="URL" width={30} height={30} />
-        <Typography variant="body1">{url}</Typography>
-      </Box>
-      <form className={styles.form} onSubmit={submitForm}>
-        <div className={styles.container}>
+  return user ? (
+    <Box className="flex flex-col gap-2.5 w-full border-t border-neutral-200 pt-2.5 pb-5">
+      <form className="flex flex-row gap-10 pl-5 pr-5" onSubmit={submitForm}>
+        <div className="w-full flex flex-row">
           <Select
             value={method}
             name="method"
@@ -40,7 +48,7 @@ export default function RestPage() {
             }}
           >
             {Object.keys(METHODS).map(key => (
-              <MenuItem key={key} value={key} sx={{ color: 'var(--color-purple)' }}>
+              <MenuItem key={key} value={key}>
                 {METHODS[key]}
               </MenuItem>
             ))}
@@ -52,6 +60,7 @@ export default function RestPage() {
             required
             value={url}
             onChange={e => dispatch(setNewUrl(e.target.value))}
+            className="outline-none border border-secondary-blue w-full px-5 transition duration-300 rounded-r-[15px] bg-neutral-200 focus:border-secondary-blue focus:bg-white hover:border-secondary-blue"
           />
         </div>
         <Button
@@ -61,16 +70,13 @@ export default function RestPage() {
             borderRadius: '15px',
             paddingLeft: '30px',
             paddingRight: '30px',
-            backgroundColor: `var(--color-purple)`,
-            '&:hover': {
-              backgroundColor: `var(--color-purple)`,
-              opacity: 1,
-            },
           }}
         >
-          {english.buttonSend}
+          {t('send')}
         </Button>
       </form>
     </Box>
+  ) : (
+    <Box>Redirecting...</Box>
   );
 }

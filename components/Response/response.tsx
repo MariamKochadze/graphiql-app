@@ -2,9 +2,11 @@
 
 import { ResponseState } from '@app/common/interface/interface';
 import { Box, Grid, Typography } from '@mui/material';
-import { useAppDispatch } from '../../hooks/useStoreHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { setNewResponse } from '../../store/features/response/responseSlice';
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+import { selectUser } from '@store/selectors';
 
 export default function Response({
   status,
@@ -23,6 +25,8 @@ export default function Response({
   method: string;
   body: string | null | undefined;
 }) {
+  const user = useAppSelector(selectUser);
+  const t = useTranslations('RestClient');
   const dispatch = useAppDispatch();
   const response: ResponseState = {
     status: parseInt(status as string) || 0,
@@ -41,33 +45,37 @@ export default function Response({
   }, [dispatch, response]);
 
   return (
-    <Box
-      sx={{
-        borderTop: '1px solid var(--color-gray)',
-      }}
-    >
-      <Grid container sx={{ padding: '0 20px' }}>
-        <Grid item xs={6}>
-          <Typography sx={{ color: 'var(--color-text)' }}>Response</Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography sx={{ color: 'var(--color-purple)' }}>Status: {status}</Typography>
-        </Grid>
-      </Grid>
-
+    user && (
       <Box
         sx={{
-          height: 250,
-          overflowY: 'scroll',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 1,
-          padding: '0 20px',
-          border: '1px solid var(--color-gray)',
+          borderTop: '1px solid var(--color-gray)',
         }}
       >
-        {error !== null ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(data, null, 2)}</pre>}
+        <Grid container sx={{ padding: '0 20px' }}>
+          <Grid item xs={6}>
+            <Typography sx={{ color: 'var(--color-text)' }}>{t('response')}</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography sx={{ color: 'var(--color-purple)' }}>
+              {t('status')}: {status}
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <Box
+          sx={{
+            height: 300,
+            overflowY: 'scroll',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
+            padding: '0 20px',
+            border: '1px solid var(--color-gray)',
+          }}
+        >
+          {error !== null ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(data, null, 2)}</pre>}
+        </Box>
       </Box>
-    </Box>
+    )
   );
 }

@@ -3,3 +3,5 @@ dist/
 build/
 coverage/
 testSetup/svgMock.js
+tailwind.config.js
+postcss.config.js

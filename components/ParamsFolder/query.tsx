@@ -13,14 +13,13 @@ import {
 import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
 import { useRef } from 'react';
 import { deleteQuery, setNewQuery } from '../../store/features/response/responseSlice';
-import english from '../RestFull-client/english.json';
-import styles from '../Restfull.module.scss';
-
+import { useTranslations } from 'next-intl';
 export default function Query() {
   const { query } = useAppSelector(state => state.response);
   const inputKey = useRef<HTMLInputElement>(null);
   const inputValue = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
+  const t = useTranslations('RestClient');
 
   function setHeaders(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -45,18 +44,16 @@ export default function Query() {
         borderTop: '1px solid var(--color-gray)',
       }}
     >
-      <Typography sx={{ color: 'var(--color-purple)' }}>
-        {english.params.query} {english.params.params}
-      </Typography>
-      <form onSubmit={setHeaders} className={styles['form-container']}>
-        <input type="text" placeholder={english.key} ref={inputKey} required className={styles['input-text']} />
-        <input type="text" placeholder={english.value} ref={inputValue} required className={styles['input-text']} />
+      <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsQuery')}</Typography>
+      <form onSubmit={setHeaders} className="flex flex-row gap-10">
+        <input type="text" placeholder={t('key')} ref={inputKey} required />
+        <input type="text" placeholder={t('value')} ref={inputValue} required />
         <Button
           variant="text"
           type="submit"
           sx={{ color: 'var(--color-purple)', border: '1px solid var(--color-purple)' }}
         >
-          {english.buttonAdd}
+          {t('addQuery')}
         </Button>
       </form>
       {Object.keys(query).length !== 0 && (
@@ -65,8 +62,8 @@ export default function Query() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>{english.key}</TableCell>
-                  <TableCell>{english.value}</TableCell>
+                  <TableCell>{t('key')}</TableCell>
+                  <TableCell>{t('value')}</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
@@ -77,7 +74,7 @@ export default function Query() {
                     <TableCell sx={{ color: 'var(--color-purple)' }}>{query[key]}</TableCell>
                     <TableCell>
                       <Button sx={{ color: 'var(--color-purple)' }} onClick={() => dispatch(deleteQuery(key))}>
-                        {english.buttonClear}
+                        {t('clear')}
                       </Button>
                     </TableCell>
                   </TableRow>

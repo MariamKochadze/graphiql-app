@@ -14,10 +14,10 @@ import {
 import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
 import { useRef } from 'react';
 import { deleteNewHeaders, setNewHeaders } from '../../store/features/response/responseSlice';
-import english from '../RestFull-client/english.json';
-import styles from '../RestFull-client/Restfull.module.scss';
+import { useTranslations } from 'next-intl';
 
 export default function Headers() {
+  const t = useTranslations('RestClient');
   const { headers } = useAppSelector(state => state.response);
   const inputKey = useRef<HTMLInputElement>(null);
   const inputValue = useRef<HTMLInputElement>(null);
@@ -46,30 +46,34 @@ export default function Headers() {
         borderTop: '1px solid var(--color-gray)',
       }}
     >
-      <Typography sx={{ color: 'var(--color-purple)' }}>
-        {english.params.headers} {english.params.params}
-      </Typography>
-      <form onSubmit={setHeaders} className={styles['form-container']}>
+      <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsHeaders')}</Typography>
+      <form onSubmit={setHeaders} className="flex flex-row w-full">
         <input
           type="text"
           list="headers"
-          placeholder={english.key}
+          placeholder={t('key')}
           ref={inputKey}
           required
-          className={styles['input-text']}
+          className="outline-none w-full h-10 border border-gray-400 px-5 transition duration-300 bg-gray-400 focus:border-purple-500 focus:bg-white hover:border-purple-500"
         />
         <datalist id="headers">
           {HEADERS.map(header => (
             <option key={header} value={header} />
           ))}
         </datalist>
-        <input type="text" placeholder={english.value} ref={inputValue} required className={styles['input-text']} />
+        <input
+          type="text"
+          placeholder={t('value')}
+          ref={inputValue}
+          required
+          className="outline-none w-full h-10 border border-gray-400 px-5 transition duration-300 bg-gray-400 focus:border-purple-500 focus:bg-white hover:border-purple-500"
+        />
         <Button
           variant="text"
           type="submit"
-          sx={{ color: 'var(--color-purple)', border: '1px solid var(--color-purple)' }}
+          sx={{ color: 'var(--color-purple)', border: '1px solid var(--color-purple)', width: '250px' }}
         >
-          {english.buttonAdd}
+          {t('addHeader')}
         </Button>
       </form>
       {Object.keys(headers).length !== 0 && (
@@ -80,8 +84,8 @@ export default function Headers() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>{english.key}</TableCell>
-                  <TableCell>{english.value}</TableCell>
+                  <TableCell>{t('key')}</TableCell>
+                  <TableCell>{t('value')}</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
@@ -92,7 +96,7 @@ export default function Headers() {
                     <TableCell sx={{ color: 'var(--color-purple)' }}>{headers[key]}</TableCell>
                     <TableCell>
                       <Button sx={{ color: 'var(--color-purple)' }} onClick={() => dispatch(deleteNewHeaders(key))}>
-                        {english.buttonClear}
+                        {t('clear')}
                       </Button>
                     </TableCell>
                   </TableRow>

@@ -2,9 +2,10 @@
 import { Box, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { setNewBody } from '../../store/features/response/responseSlice';
-import english from '../RestFull-client/english.json';
+import { useTranslations } from 'next-intl';
 export default function Body() {
   const dispatch = useAppDispatch();
+  const t = useTranslations('RestClient');
   const { body } = useAppSelector(state => state.response);
   return (
     <Box
@@ -17,11 +18,9 @@ export default function Body() {
         borderTop: '1px solid var(--color-gray)',
       }}
     >
-      <Typography sx={{ color: 'var(--color-purple)' }}>
-        {english.params.body} {english.params.params}
-      </Typography>
+      <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsBody')}</Typography>
       <textarea
-        value={body}
+        value={body || ''}
         style={{
           width: 'calc(100% - 30px)',
           padding: '10px',

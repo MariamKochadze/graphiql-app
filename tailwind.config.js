@@ -20,6 +20,7 @@ export default {
     borderColor: {
       'neutral-200': '#f4f7ff',
       'light-blue': '#00aaff',
+      'color-gray': '#eaecf0',
     },
     boxShadow: {
       'shadow-m': '0px 4px 40px 0px #8066ff0f',
