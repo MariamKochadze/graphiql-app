@@ -39,10 +39,12 @@ const Participants = () => {
     },
   ];
   return (
-    <section className="py-20">
+    <section className="lg:py-20 py-6">
       <div className="container">
-        <h2 className="text-center text-light-blue text-4xl font-semibold mb-5">{t('ParticipantsTitle')}</h2>
-        <div className="grid grid-cols-2 justify-center gap-6 my-6">
+        <h2 className="text-center text-light-blue lg:text-4xl text-3xl font-semibold mb-5">
+          {t('ParticipantsTitle')}
+        </h2>
+        <div className="grid lg:grid-cols-2 grid-cols-1 justify-center gap-6 my-6">
           {participants.map(item => (
             <ParticipantsCard key={item.id} item={item} />
           ))}

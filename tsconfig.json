@@ -31,6 +31,16 @@
     ],
     "strictNullChecks": true
   },
-  "include": ["pages", "next-env.d.ts", "**/*.ts", "**/*.tsx", "**/**/*.ts", "**/**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "pages",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/**/*.ts",
+    "**/**/*.tsx",
+    ".next/types/**/*.ts",
+    "tailwind.config.js",
+    "postcss.config.js"
+  ],
   "exclude": ["node_modules"]
 }
