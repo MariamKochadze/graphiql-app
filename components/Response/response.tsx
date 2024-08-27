@@ -7,6 +7,10 @@ import { setNewResponse } from '../../store/features/response/responseSlice';
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { selectUser } from '@store/selectors';
+import { Controlled as JsonTextarea } from 'react-codemirror2';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/neat.css';
+import 'codemirror/mode/javascript/javascript';
 
 export default function Response({
   status,
@@ -40,6 +44,19 @@ export default function Response({
     query: {},
   };
 
+  const options = {
+    mode: { name: 'javascript', json: true },
+    theme: 'neat',
+    lineNumbers: true,
+    tabSize: 2,
+    indentWithTabs: true,
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    lineWrapping: true,
+    readOnly: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+  };
+
   useEffect(() => {
     dispatch(setNewResponse(response));
   }, [dispatch, response]);
@@ -65,15 +82,30 @@ export default function Response({
         <Box
           sx={{
             height: 300,
-            overflowY: 'scroll',
+            overflowY: 'hidden',
             display: 'flex',
             flexDirection: 'column',
             gap: 1,
-            padding: '0 20px',
             border: '1px solid var(--color-gray)',
           }}
         >
-          {error !== null ? <pre>{JSON.stringify(error, null, 2)}</pre> : <pre>{JSON.stringify(data, null, 2)}</pre>}
+          {error !== null ? (
+            <JsonTextarea
+              value={JSON.stringify(error, null, 2)}
+              options={options}
+              onBeforeChange={(editor, data, value) => {
+                editor.setValue(JSON.stringify(value, null, 2));
+              }}
+            />
+          ) : (
+            <JsonTextarea
+              value={JSON.stringify(data, null, 2)}
+              options={options}
+              onBeforeChange={(editor, data, value) => {
+                editor.setValue(JSON.stringify(value, null, 2));
+              }}
+            />
+          )}
         </Box>
       </Box>
     )

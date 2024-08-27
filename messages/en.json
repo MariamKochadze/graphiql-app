@@ -53,6 +53,9 @@
     "paramsBody": "Params Body",
     "paramsQuery": "Params Query",
     "clear": "Clear",
-    "addQuery": "Add Query"
+    "addQuery": "Add Query",
+    "none": "None",
+    "json": "JSON",
+    "text": "Text"
   }
 }
