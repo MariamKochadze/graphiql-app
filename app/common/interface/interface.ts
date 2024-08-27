@@ -1,0 +1,11 @@
+export interface ResponseState {
+  url: string;
+  method: string;
+  headers: Record<string, string>;
+  body: string | unknown;
+  response: string;
+  status: number;
+  size: number;
+  time: number;
+  query: Record<string, string>;
+}

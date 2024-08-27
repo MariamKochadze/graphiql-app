@@ -3,6 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 /* stylelint-enable */
+
+:root {
+  --color-purple: #1976d2;
+  --color-gray: #eaecf0;
+  --color-white: #fff;
+  --color-black: #000;
+  --color-text: #0041b1;
+}
+
 .container {
   max-width: 1170px;
   width: 100%;

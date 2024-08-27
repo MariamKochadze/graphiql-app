@@ -28,7 +28,7 @@ const HomeSection = () => {
               </>
             ) : (
               <>
-                <Link href="/restClient">
+                <Link href="/restfull-client">
                   <Button variant="contained">{t('rest-client')}</Button>
                 </Link>
                 <Link href="/graphiqlClient">

@@ -39,5 +39,20 @@
     "password": "Password",
     "confirm-password": "Confirm Password",
     "sign-up": "SIGN-UP"
+  },
+  "RestClient": {
+    "response": "Response",
+    "key": "Key",
+    "value": "Value",
+    "send": "Send",
+    "addHeader": "Add",
+    "status": "Status",
+    "headers": "Headers",
+    "body": "Body",
+    "paramsHeaders": "Params Headers",
+    "paramsBody": "Params Body",
+    "paramsQuery": "Params Query",
+    "clear": "Clear",
+    "addQuery": "Add Query"
   }
 }
