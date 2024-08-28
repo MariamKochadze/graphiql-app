@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { selectUser } from '@store/selectors';
 import { Controlled as JsonTextarea } from 'react-codemirror2';
+import { httpStatusDescriptions, httpColors } from '@app/common/constants';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/neat.css';
 import 'codemirror/mode/javascript/javascript';
@@ -56,6 +57,7 @@ export default function Response({
     readOnly: true,
     gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
   };
+  const colorStatus: string = httpColors[response.status.toString()[0]];
 
   useEffect(() => {
     dispatch(setNewResponse(response));
@@ -68,13 +70,27 @@ export default function Response({
           borderTop: '1px solid var(--color-gray)',
         }}
       >
-        <Grid container sx={{ padding: '0 20px' }}>
+        <Grid container sx={{ padding: '5px 20px' }}>
           <Grid item xs={6}>
             <Typography sx={{ color: 'var(--color-text)' }}>{t('response')}</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography sx={{ color: 'var(--color-purple)' }}>
-              {t('status')}: {status}
+            <Typography>
+              <span className="text-color-blue">
+                {t('status')}
+                {': '}
+              </span>
+              <span
+                style={{
+                  color: colorStatus,
+                  border: `1px solid ${colorStatus || 'black'}`,
+                  padding: '5px 15px',
+                  borderRadius: '5px',
+                  backgroundColor: `${colorStatus || '#000000'}20`,
+                }}
+              >
+                {response.status} {httpStatusDescriptions[response.status.toString()] || 'Unknown'}
+              </span>
             </Typography>
           </Grid>
         </Grid>
