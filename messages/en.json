@@ -57,5 +57,8 @@
     "none": "None",
     "json": "JSON",
     "text": "Text"
+  },
+  "LoaderPage": {
+    "cancel": "Cancel"
   }
 }

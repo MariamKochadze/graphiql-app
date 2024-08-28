@@ -57,5 +57,8 @@
     "none": "без тела",
     "json": "JSON",
     "text": "Текст"
+  },
+  "LoaderPage": {
+    "cancel": "Отменить"
   }
 }
