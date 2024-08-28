@@ -25,7 +25,7 @@ function JsonTextarea() {
     <>
       <CodeMirror
         value={value as string}
-        height="150px"
+        height="140px"
         theme={githubLight}
         extensions={[javascript({ jsx: true })]}
         onChange={onChange}

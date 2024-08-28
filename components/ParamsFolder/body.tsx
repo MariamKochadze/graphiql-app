@@ -24,14 +24,13 @@ export default function Body() {
       <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsBody')}</Typography>
       <FormControl>
         <RadioGroup row value={radio} onChange={e => setRadio(e.target.value)}>
-          <FormControlLabel value="none" control={<Radio />} label={t('none')} />
           <FormControlLabel value="json" control={<Radio />} label={t('json')} />
           <FormControlLabel value="text" control={<Radio />} label={t('text')} />
         </RadioGroup>
       </FormControl>
       {radio === 'text' && (
         <textarea
-          value={body as string}
+          value={(body as string) || ''}
           style={{
             width: 'calc(100% - 30px)',
             padding: '10px',
