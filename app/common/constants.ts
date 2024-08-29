@@ -16,6 +16,8 @@ export const HEADERS = [
   'X-Request-Id',
 ];
 
+export const falsyValues = ['false', 'null', 'undefined', 'NaN', 'true', 'infinity'];
+
 export const httpStatusDescriptions: { [key: string]: string } = {
   '100': 'Continue',
   '101': 'Switching Protocols',

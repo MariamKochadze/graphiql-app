@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
 import { useRef, useState } from 'react';
 import { deleteVariable, setNewVariable } from '../../store/features/response/responseSlice';
 import { useTranslations } from 'next-intl';
+import { falsyValues } from '@app/common/constants';
 
 export default function Headers() {
   const [showVariables, setShowVariables] = useState(false);
@@ -28,8 +29,18 @@ export default function Headers() {
     e.preventDefault();
 
     if (inputKey.current && inputValue.current) {
-      const key = inputKey.current.value;
-      const value = inputValue.current.value;
+      let key: string = inputKey.current.value;
+      let value: string = inputValue.current.value;
+      if (!parseFloat(value) && (!value.startsWith('"') || !value.endsWith('"')) && !falsyValues.includes(value)) {
+        if (!value.startsWith('"')) {
+          value = `"${value}`;
+        }
+        if (!value.endsWith('"')) {
+          value = `${value}"`;
+        }
+      }
+
+      key = key.replace(new RegExp(' ', 'g'), '_');
       dispatch(setNewVariable({ key, value }));
       inputKey.current.value = '';
       inputValue.current.value = '';
