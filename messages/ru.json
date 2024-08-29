@@ -51,12 +51,14 @@
     "body": "Тело",
     "paramsHeaders": "Параметры заголовков",
     "paramsBody": "Параметры тела",
-    "paramsQuery": "Параметры запроса",
+    "paramsVariables": "Параметры переменных",
     "clear": "Очистить",
-    "addQuery": "Добавить параметр запроса",
     "none": "без тела",
     "json": "JSON",
-    "text": "Текст"
+    "text": "Текст",
+    "variables": "Переменные",
+    "variable": "Переменная",
+    "showVariables": "Показать переменные"
   },
   "LoaderPage": {
     "cancel": "Отменить"

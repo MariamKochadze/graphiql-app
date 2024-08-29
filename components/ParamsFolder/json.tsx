@@ -8,14 +8,18 @@ import { Typography } from '@mui/material';
 
 function JsonTextarea() {
   const [error, setError] = React.useState<string | null>(null);
-  const { body } = useAppSelector(state => state.response);
+  const { body, variables } = useAppSelector(state => state.response);
   const dispatch = useAppDispatch();
   const [value, setValue] = React.useState(body);
   const onChange = React.useCallback(val => {
     setValue(val);
     dispatch(setNewBody(val));
     try {
-      JSON.parse(val);
+      let test: string = val;
+      Object.keys(variables).forEach(key => {
+        test = test.replace(new RegExp(`{{${key}}}`, 'g'), `${variables[key]}`);
+      });
+      JSON.parse(test);
       setError(null);
     } catch (error) {
       setError(error.message);

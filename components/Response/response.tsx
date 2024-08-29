@@ -33,16 +33,29 @@ export default function Response({
   const user = useAppSelector(selectUser);
   const t = useTranslations('RestClient');
   const dispatch = useAppDispatch();
+  let variables: Record<string, string> = {};
+  let bodyWithVariables: string = '';
+  const objBody = body ? (JSON.parse(body) as Record<string, unknown>) : undefined;
+  if (objBody && objBody['apiDogVariables']) {
+    variables = objBody['apiDogVariables'] as Record<string, string>;
+    delete objBody['apiDogVariables'];
+    bodyWithVariables = JSON.stringify(objBody, null, 2);
+    Object.entries(variables).forEach(([key, value]) => {
+      bodyWithVariables = bodyWithVariables.replace(new RegExp(`${value}`, 'g'), `{{${key}}}`);
+    });
+  } else {
+    bodyWithVariables = JSON.stringify(objBody, null, 2);
+  }
   const response: ResponseState = {
     status: parseInt(status as string) || 0,
     headers,
     url,
     method,
-    body: body || '',
+    body: bodyWithVariables || '',
     response: '',
     size: 0,
     time: 0,
-    query: {},
+    variables,
   };
 
   const options = {

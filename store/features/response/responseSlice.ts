@@ -5,7 +5,7 @@ const initialState: ResponseState = {
   url: '',
   method: 'GET',
   headers: {},
-  query: {},
+  variables: {},
   body: '',
   response: '',
   status: 0,
@@ -30,11 +30,11 @@ const responseSlice = createSlice({
       delete state.headers[actions.payload];
     },
 
-    setNewQuery: (state, actions: PayloadAction<Record<string, string>>) => {
-      state.query[actions.payload.key] = actions.payload.value;
+    setNewVariable: (state, actions: PayloadAction<Record<string, string>>) => {
+      state.variables[actions.payload.key] = actions.payload.value;
     },
-    deleteQuery: (state, actions: PayloadAction<string>) => {
-      delete state.query[actions.payload];
+    deleteVariable: (state, actions: PayloadAction<string>) => {
+      delete state.variables[actions.payload];
     },
 
     setNewBody: (state, actions: PayloadAction<string>) => {
@@ -51,8 +51,8 @@ export const {
   setNewUrl,
   setNewHeaders,
   deleteNewHeaders,
-  setNewQuery,
-  deleteQuery,
+  setNewVariable,
+  deleteVariable,
   setNewMethod,
   setNewBody,
   setNewResponse,
