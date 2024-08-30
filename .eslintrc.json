@@ -10,7 +10,7 @@
     "plugin:@next/next/recommended",
     "prettier"
   ],
-  "ignorePatterns": ["dist", ".eslintrc.cjs", "next.config.js"],
+  "ignorePatterns": ["dist", ".eslintrc.cjs", "next.config.js", "tailwind.config.js", "postcss.config.js"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",

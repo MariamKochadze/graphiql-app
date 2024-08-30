@@ -1,20 +1,19 @@
 'use client';
 import LocaleSwitcher from '@components/LocaleSwitcher/LocaleSwitcher';
-import Button from '@mui/material/Button';
 import { setUser } from '@store/userSlice';
 import { onAuthStateChangedListener, signOutUser } from '@utils/firebase/firebase.utils';
 import { User } from 'firebase/auth';
-import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { Link } from '../../navigation';
 import { selectUser } from '../../store/selectors/index';
+import AdaptiveMenu from './AdaptiveMenu/AdaptiveMenu';
+import NavMenu from './NavMenu/NavMenu';
 
 export const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
   const dispatch = useAppDispatch();
 
-  const t = useTranslations('HomePage');
   const user = useAppSelector(selectUser);
 
   const handleScroll = () => {
@@ -111,31 +110,9 @@ export const Header = () => {
             </defs>
           </svg>
         </Link>
-        <nav className="">
-          <ul className="flex justify-between items-center gap-4">
-            <li>
-              <LocaleSwitcher isSticky={isSticky} />
-            </li>
-            {!user ? (
-              <>
-                <li>
-                  <Link href="/authentication">
-                    <Button variant="contained">{t('sign-in')}</Button>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/authentication">
-                    <Button variant="contained">{t('sign-up')}</Button>
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <Button variant="contained" onClick={handleSignOut}>
-                {t('sign-out')}
-              </Button>
-            )}
-          </ul>
-        </nav>
+        <LocaleSwitcher isSticky={isSticky} />
+        <NavMenu user={user} onSignOut={handleSignOut} />
+        <AdaptiveMenu user={user} onSignOut={handleSignOut} />
       </div>
     </header>
   );

@@ -19,7 +19,7 @@ const ParticipantsCard: React.FC<ParticipantsCardProps> = ({ item }) => {
         </div>
         <div className="">
           <h2 className="">{item.name}</h2>
-          <h3 className="whitespace-pre">{item.position}</h3>
+          <h3 className="lg:whitespace-pre whitespace-break-spaces">{item.position}</h3>
         </div>
       </div>
     </div>
