@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from 'utils/firebase/firebase.utils';
 
 // Define a type for a simplified user object
-type SimpleUser = {
+export type SimpleUser = {
   uid: string;
   email: string | null;
   displayName: string | null;

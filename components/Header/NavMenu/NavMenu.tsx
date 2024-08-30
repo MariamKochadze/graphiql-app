@@ -1,15 +1,10 @@
 import Button from '@mui/material/Button';
+import { SimpleUser } from '@store/userSlice';
 import { useRouter } from 'navigation';
 import { useTranslations } from 'next-intl';
 
-interface UserInfo {
-  uid: string;
-  displayName: string;
-  email: string;
-}
-
 interface UserProps {
-  user: UserInfo | null;
+  user: SimpleUser | null;
   onSignOut: () => void;
 }
 
