@@ -7,5 +7,5 @@ export interface ResponseState {
   status: number;
   size: number;
   time: number;
-  query: Record<string, string>;
+  variables: Record<string, string>;
 }

@@ -6,19 +6,20 @@
     }
   },
   "cSpell.words": [
-    "stylelint",
-    "karuk",
-    "homeworld",
-    "starships",
-    "SWAPI",
-    "Toastify",
-    "MGLT",
-    "hyperdrive",
     "atmosphering",
+    "codemirror",
+    "homeworld",
+    "hyperdrive",
+    "karuk",
+    "MGLT",
     "reduxjs",
-    "testid",
-    "svgr",
     "Skywalker",
-    "starwars-visualguide"
+    "starships",
+    "starwars-visualguide",
+    "stylelint",
+    "svgr",
+    "SWAPI",
+    "testid",
+    "Toastify"
   ]
 }

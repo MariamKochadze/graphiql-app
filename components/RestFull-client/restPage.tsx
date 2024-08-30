@@ -59,8 +59,9 @@ export default function RestPage() {
             placeholder="https://example.com"
             required
             value={url}
+            autoComplete="on"
             onChange={e => dispatch(setNewUrl(e.target.value))}
-            className="outline-none border border-secondary-blue w-full px-5 transition duration-300 rounded-r-[15px] bg-neutral-200 focus:border-secondary-blue focus:bg-white hover:border-secondary-blue"
+            className="bg-color-gray border-color-gray outline-none px-1 w-full h-full rounded-r-2xl transition duration-300 hover:border-light-blue border-2 focus:bg-white focus:border-light-blue focus:shadow-md focus:shadow-blue-500 focus:bg-body-bg"
           />
         </div>
         <Button

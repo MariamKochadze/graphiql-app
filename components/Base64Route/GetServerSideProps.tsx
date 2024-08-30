@@ -8,10 +8,14 @@ export async function getServerSideProps({
   searchParams: Record<string, string>;
 }) {
   const { url, body } = decodeBase64({ params });
+  const bodyObject = body ? (JSON.parse(body) as Record<string, unknown>) : undefined;
+  if (bodyObject && bodyObject['apiDogVariables']) {
+    delete bodyObject['apiDogVariables'];
+  }
   try {
     const response = await fetch(url, {
       method: params.method,
-      body: body ? body : undefined,
+      body: body ? JSON.stringify(bodyObject) : undefined,
       headers: {
         ...searchParams,
       },

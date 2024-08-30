@@ -51,8 +51,16 @@
     "body": "Body",
     "paramsHeaders": "Params Headers",
     "paramsBody": "Params Body",
-    "paramsQuery": "Params Query",
+    "paramsVariables": "Params Variables",
     "clear": "Clear",
-    "addQuery": "Add Query"
+    "none": "None",
+    "json": "JSON",
+    "text": "Text",
+    "variables": "Variables",
+    "variable": "Variable",
+    "showVariables": "Show Variables"
+  },
+  "LoaderPage": {
+    "cancel": "Cancel"
   }
 }
