@@ -33,7 +33,7 @@ export default function RestPage() {
   }
   return user ? (
     <Box className="flex flex-col gap-2.5 w-full border-t border-neutral-200 pt-2.5 pb-5">
-      <form className="flex flex-row gap-10 pl-5 pr-5" onSubmit={submitForm}>
+      <form className="flex flex-row gap-1 lg:10 md:gap-5 px-1 lg:px-5" onSubmit={submitForm}>
         <div className="w-full flex flex-row">
           <Select
             value={method}
@@ -64,15 +64,7 @@ export default function RestPage() {
             className="bg-color-gray border-color-gray outline-none px-1 w-full h-full rounded-r-2xl transition duration-300 hover:border-light-blue border-2 focus:bg-white focus:border-light-blue focus:shadow-md focus:shadow-blue-500 focus:bg-body-bg"
           />
         </div>
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{
-            borderRadius: '15px',
-            paddingLeft: '30px',
-            paddingRight: '30px',
-          }}
-        >
+        <Button type="submit" variant="contained" className="px-1.5 lg:px-10 rounded-lg">
           {t('send')}
         </Button>
       </form>

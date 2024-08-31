@@ -13,7 +13,7 @@ export default function Params() {
   const [selectParam, setSelectParam] = useState<'Headers' | 'Body' | 'Variables'>('Headers');
   return (
     user && (
-      <Box className="w-full px-5 border border-color-gray">
+      <Box className="w-full px-2 lg:px-5 border border-color-gray">
         <Tabs value={selectParam} onChange={(_, value) => setSelectParam(value)}>
           <Tab value="Body" label={t('body')} />
           <Tab value="Headers" label={t('headers')} />

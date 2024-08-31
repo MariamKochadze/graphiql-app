@@ -84,10 +84,10 @@ export default function Response({
         }}
       >
         <Grid container sx={{ padding: '5px 20px' }}>
-          <Grid item xs={6}>
+          <Grid item xs={5}>
             <Typography sx={{ color: 'var(--color-text)' }}>{t('response')}</Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={7}>
             <Typography>
               <span className="text-color-blue">
                 {t('status')}
