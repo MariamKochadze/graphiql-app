@@ -64,7 +64,7 @@ const SignUpForm = () => {
         await createUserDocumentFromAuth(user, { displayName });
 
         toast.success('Successfully registered');
-        dispatch(setUser(user));
+        dispatch(setUser({ uid: user.uid, email: user.email, displayName: user.displayName }));
         router.push('/');
       }
     } catch (error) {
