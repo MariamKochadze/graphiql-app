@@ -4,6 +4,7 @@ import { setUser } from '@store/userSlice';
 import { onAuthStateChangedListener, signOutUser } from '@utils/firebase/firebase.utils';
 import { User } from 'firebase/auth';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { Link } from '../../navigation';
 import { selectUser } from '../../store/selectors/index';
@@ -30,6 +31,7 @@ export const Header = () => {
 
   const handleSignOut = async () => {
     await signOutUser();
+    toast.success('Successfully signed out');
   };
 
   useEffect(() => {

@@ -6,6 +6,8 @@ import { User, UserCredential } from 'firebase/auth';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from 'utils/firebase/firebase.utils';
 import { ValidationError } from 'yup';
 import { validationSchema } from './validation';
@@ -61,6 +63,7 @@ const SignUpForm = () => {
         const user: User = userCredentials.user;
         await createUserDocumentFromAuth(user, { displayName });
 
+        toast.success('Successfully registered');
         dispatch(setUser(user));
         router.push('/');
       }

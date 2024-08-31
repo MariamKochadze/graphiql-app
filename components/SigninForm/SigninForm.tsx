@@ -5,6 +5,7 @@ import { useAppDispatch } from 'hooks/useStoreHooks';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { setUser } from 'store/userSlice';
 import { signInAuthUserWithEmailAndPassword } from 'utils/firebase/firebase.utils';
 import { ValidationError } from 'yup';
@@ -49,6 +50,8 @@ const SignInForm = () => {
 
       if (userCredential) {
         const user: User = userCredential.user;
+
+        toast.success(`Welcome back, ${user.displayName}`);
 
         dispatch(setUser(user));
         router.push('/');
