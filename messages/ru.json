@@ -62,5 +62,14 @@
   },
   "LoaderPage": {
     "cancel": "Отменить"
+  },
+  "History": {
+    "noHistory": "Вы еще не выполнили ни одного запроса.\nЗдесь пусто. Попробуйте эти варианты:",
+    "rest-client": "Запрос REST",
+    "graphiql-client": "Запрос GraphQL",
+    "historyRequest": "История запросов",
+    "method": "Метод",
+    "url": "URL-адрес",
+    "date": "Дата"
   }
 }

@@ -9,3 +9,7 @@ export interface ResponseState {
   time: number;
   variables: Record<string, string>;
 }
+
+export interface RequestHistory extends ResponseState {
+  date: Date;
+}

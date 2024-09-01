@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { selectUser } from '@store/selectors';
 import { useEffect } from 'react';
+import { setNewHistory } from '@store/features/history/historySlice';
 export default function RestPage() {
   const t = useTranslations('RestClient');
   const { method, url } = useAppSelector(state => state.response);
@@ -29,6 +30,7 @@ export default function RestPage() {
     e.preventDefault();
     const route = base64Route(response);
     const lang = pathname.split('/')[1];
+    dispatch(setNewHistory({ email: user?.email || '', response }));
     router.push(`/${lang}${route}`);
   }
   return user ? (

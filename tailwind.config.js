@@ -22,6 +22,7 @@ export default {
       'color-yellow': '#faad14',
       'color-purple': '#1976d2',
       'color-blue': '#1890ff',
+      'light-bg-blue': '#1a66ff50',
     },
     borderColor: {
       'neutral-200': '#f4f7ff',
