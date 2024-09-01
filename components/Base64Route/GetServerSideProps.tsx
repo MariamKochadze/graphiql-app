@@ -4,13 +4,14 @@ export async function getServerSideProps({
   params,
   searchParams,
 }: {
-  params: { method: string; base64: string; body?: string };
+  params: { method: string; base64?: string; body?: string };
   searchParams: Record<string, string>;
 }) {
   const { url, body } = decodeBase64({ params });
   const bodyObject = body ? (JSON.parse(body) as Record<string, unknown>) : undefined;
-  if (bodyObject && bodyObject['apiDogVariables']) {
+  if (bodyObject && (bodyObject['apiDogVariables'] || bodyObject['apiDogBody'])) {
     delete bodyObject['apiDogVariables'];
+    delete bodyObject['apiDogBody'];
   }
   try {
     const response = await fetch(url, {

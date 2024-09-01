@@ -11,21 +11,24 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
+import { useAppSelector } from 'hooks/useStoreHooks';
 import { useRef, useState } from 'react';
-import { deleteVariable, setNewVariable } from '../../store/features/response/responseSlice';
 import { useTranslations } from 'next-intl';
 import { falsyValues } from '@app/common/constants';
+import { base64Route } from '@components/Base64Route/Base64Route';
+import { useRouter, usePathname } from 'next/navigation';
 
-export default function Headers() {
+export default function Variables() {
+  const router = useRouter();
+  const pathname = usePathname();
   const [showVariables, setShowVariables] = useState(false);
   const t = useTranslations('RestClient');
   const { variables } = useAppSelector(state => state.response);
   const inputKey = useRef<HTMLInputElement>(null);
   const inputValue = useRef<HTMLInputElement>(null);
-  const dispatch = useAppDispatch();
+  const response = useAppSelector(state => state.response);
 
-  function setHeaders(e: React.FormEvent<HTMLFormElement>) {
+  function setVariables(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (inputKey.current && inputValue.current) {
@@ -41,10 +44,24 @@ export default function Headers() {
       }
 
       key = key.replace(new RegExp(' ', 'g'), '_');
-      dispatch(setNewVariable({ key, value }));
-      inputKey.current.value = '';
-      inputValue.current.value = '';
+      const variableNew = { ...variables };
+      variableNew[key] = value;
+      const responseNew = { ...response };
+      responseNew.variables = variableNew;
+      const route = base64Route(responseNew);
+      const lang = pathname.split('/')[1];
+      router.push(`/${lang}${route}`);
     }
+  }
+
+  function handleDeleteVariable(key: string) {
+    const variableNew = { ...variables };
+    delete variableNew[key];
+    const responseNew = { ...response };
+    responseNew.variables = variableNew;
+    const route = base64Route(responseNew);
+    const lang = pathname.split('/')[1];
+    router.push(`/${lang}${route}`);
   }
 
   return (
@@ -59,7 +76,7 @@ export default function Headers() {
       }}
     >
       <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsVariables')}</Typography>
-      <form onSubmit={setHeaders} className="flex flex-row w-full">
+      <form onSubmit={setVariables} className="flex flex-row w-full">
         <input
           type="text"
           list="headers"
@@ -107,7 +124,7 @@ export default function Headers() {
                       <TableCell sx={{ color: 'var(--color-purple)' }}>{key}</TableCell>
                       <TableCell sx={{ color: 'var(--color-purple)' }}>{variables[key]}</TableCell>
                       <TableCell>
-                        <Button sx={{ color: 'var(--color-purple)' }} onClick={() => dispatch(deleteVariable(key))}>
+                        <Button sx={{ color: 'var(--color-purple)' }} onClick={() => handleDeleteVariable(key)}>
                           {t('clear')}
                         </Button>
                       </TableCell>

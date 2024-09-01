@@ -12,6 +12,7 @@ import { httpStatusDescriptions, httpColors } from '@app/common/constants';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/neat.css';
 import 'codemirror/mode/javascript/javascript';
+import { removeBodyVariables } from '@components/Base64Route/BodyVariables';
 
 export default function Response({
   status,
@@ -21,6 +22,7 @@ export default function Response({
   url,
   method,
   body,
+  submit,
 }: {
   status: string | null | number;
   data: unknown | null;
@@ -29,29 +31,18 @@ export default function Response({
   url: string;
   method: string;
   body: string | null | undefined;
+  submit: boolean;
 }) {
   const user = useAppSelector(selectUser);
   const t = useTranslations('RestClient');
   const dispatch = useAppDispatch();
-  let variables: Record<string, string> = {};
-  let bodyWithVariables: string = '';
-  const objBody = body ? (JSON.parse(body) as Record<string, unknown>) : undefined;
-  if (objBody && objBody['apiDogVariables']) {
-    variables = objBody['apiDogVariables'] as Record<string, string>;
-    delete objBody['apiDogVariables'];
-    bodyWithVariables = JSON.stringify(objBody, null, 2);
-    Object.entries(variables).forEach(([key, value]) => {
-      bodyWithVariables = bodyWithVariables.replace(new RegExp(`${value}`, 'g'), `{{${key}}}`);
-    });
-  } else {
-    bodyWithVariables = JSON.stringify(objBody, null, 2);
-  }
+  const { bodyWithVariables, variables } = removeBodyVariables(body);
   const response: ResponseState = {
     status: parseInt(status as string) || 0,
     headers,
-    url,
+    url: url || '',
     method,
-    body: bodyWithVariables || '',
+    body: bodyWithVariables !== '{}' && bodyWithVariables ? bodyWithVariables : '',
     response: '',
     size: 0,
     time: 0,
@@ -77,7 +68,8 @@ export default function Response({
   }, [dispatch, response]);
 
   return (
-    user && (
+    user &&
+    submit && (
       <Box
         sx={{
           borderTop: '1px solid var(--color-gray)',

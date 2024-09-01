@@ -5,11 +5,23 @@ import { setNewBody } from '../../store/features/response/responseSlice';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import JsonTextarea from './json';
+import { usePathname } from 'next/navigation';
+import { base64Route } from '@components/Base64Route/Base64Route';
+import { useRouter } from 'next/navigation';
 export default function Body() {
+  const pathname = usePathname();
   const dispatch = useAppDispatch();
   const t = useTranslations('RestClient');
   const { body } = useAppSelector(state => state.response);
   const [radio, setRadio] = useState('json');
+  const response = useAppSelector(state => state.response);
+  const router = useRouter();
+
+  function handleBlurBody() {
+    const route = base64Route(response);
+    const lang = pathname.split('/')[1];
+    router.push(`/${lang}${route}`);
+  }
 
   return (
     <Box
@@ -39,11 +51,12 @@ export default function Body() {
             outline: 'none',
           }}
           onChange={e => dispatch(setNewBody(e.target.value))}
+          onBlur={handleBlurBody}
         ></textarea>
       )}
       {radio === 'json' && (
         <Box sx={{ height: '100%' }}>
-          <JsonTextarea />
+          <JsonTextarea changeBlur={handleBlurBody} />
         </Box>
       )}
     </Box>
