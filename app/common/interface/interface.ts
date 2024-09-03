@@ -13,3 +13,8 @@ export interface ResponseState {
 export interface RequestHistory extends ResponseState {
   date: Date;
 }
+export interface ParamsState {
+  openPage: 'Headers' | 'Body' | 'Variables';
+  showVariables: boolean;
+  bodyType: 'json' | 'text';
+}

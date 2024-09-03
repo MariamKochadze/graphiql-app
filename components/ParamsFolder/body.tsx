@@ -3,13 +3,25 @@ import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } fro
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { setNewBody } from '../../store/features/response/responseSlice';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
 import JsonTextarea from './json';
+import { setBodyType } from '@store/features/response/paramSlice';
+import { usePathname } from 'next/navigation';
+import { base64Route } from '@components/Base64Route/Base64Route';
+import { useRouter } from 'next/navigation';
 export default function Body() {
+  const pathname = usePathname();
   const dispatch = useAppDispatch();
   const t = useTranslations('RestClient');
   const { body } = useAppSelector(state => state.response);
-  const [radio, setRadio] = useState('json');
+  const { bodyType } = useAppSelector(state => state.params);
+  const response = useAppSelector(state => state.response);
+  const router = useRouter();
+
+  function handleBlurBody() {
+    const route = base64Route(response);
+    const lang = pathname.split('/')[1];
+    router.push(`/${lang}${route}`);
+  }
 
   return (
     <Box
@@ -23,12 +35,12 @@ export default function Body() {
     >
       <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsBody')}</Typography>
       <FormControl>
-        <RadioGroup row value={radio} onChange={e => setRadio(e.target.value)}>
+        <RadioGroup row value={bodyType} onChange={e => dispatch(setBodyType(e.target.value as 'json' | 'text'))}>
           <FormControlLabel value="json" control={<Radio />} label={t('json')} />
           <FormControlLabel value="text" control={<Radio />} label={t('text')} />
         </RadioGroup>
       </FormControl>
-      {radio === 'text' && (
+      {bodyType === 'text' && (
         <textarea
           value={(body as string) || ''}
           style={{
@@ -39,11 +51,12 @@ export default function Body() {
             outline: 'none',
           }}
           onChange={e => dispatch(setNewBody(e.target.value))}
+          onBlur={handleBlurBody}
         ></textarea>
       )}
-      {radio === 'json' && (
+      {bodyType === 'json' && (
         <Box sx={{ height: '100%' }}>
-          <JsonTextarea />
+          <JsonTextarea changeBlur={handleBlurBody} />
         </Box>
       )}
     </Box>

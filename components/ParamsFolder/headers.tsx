@@ -11,17 +11,21 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useAppDispatch, useAppSelector } from 'hooks/useStoreHooks';
+import { useAppSelector } from 'hooks/useStoreHooks';
 import { useRef } from 'react';
-import { deleteNewHeaders, setNewHeaders } from '../../store/features/response/responseSlice';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { base64Route } from '@components/Base64Route/Base64Route';
+import { usePathname } from 'next/navigation';
 
 export default function Headers() {
+  const pathname = usePathname();
+  const router = useRouter();
   const t = useTranslations('RestClient');
   const { headers } = useAppSelector(state => state.response);
+  const response = useAppSelector(state => state.response);
   const inputKey = useRef<HTMLInputElement>(null);
   const inputValue = useRef<HTMLInputElement>(null);
-  const dispatch = useAppDispatch();
 
   function setHeaders(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -29,10 +33,26 @@ export default function Headers() {
     if (inputKey.current && inputValue.current) {
       const key = inputKey.current.value;
       const value = inputValue.current.value;
-      dispatch(setNewHeaders({ key, value }));
+      const headerNew = { ...headers };
+      headerNew[key] = value;
       inputKey.current.value = '';
       inputValue.current.value = '';
+      const responseNew = { ...response };
+      responseNew.headers = headerNew;
+      const route = base64Route(responseNew);
+      const lang = pathname.split('/')[1];
+      router.push(`/${lang}${route}`);
     }
+  }
+
+  function handleDeleteHeader(key: string) {
+    const headerNew = { ...headers };
+    delete headerNew[key];
+    const responseNew = { ...response };
+    responseNew.headers = headerNew;
+    const route = base64Route(responseNew);
+    const lang = pathname.split('/')[1];
+    router.push(`/${lang}${route}`);
   }
 
   return (
@@ -95,7 +115,7 @@ export default function Headers() {
                     <TableCell sx={{ color: 'var(--color-purple)' }}>{key}</TableCell>
                     <TableCell sx={{ color: 'var(--color-purple)' }}>{headers[key]}</TableCell>
                     <TableCell>
-                      <Button sx={{ color: 'var(--color-purple)' }} onClick={() => dispatch(deleteNewHeaders(key))}>
+                      <Button sx={{ color: 'var(--color-purple)' }} onClick={() => handleDeleteHeader(key)}>
                         {t('clear')}
                       </Button>
                     </TableCell>

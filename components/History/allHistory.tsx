@@ -4,6 +4,7 @@ import { useAppSelector } from '@hooks/useStoreHooks';
 import { selectUser } from '@store/selectors';
 import { base64Route } from '@components/Base64Route/Base64Route';
 import { usePathname } from 'next/navigation';
+import { methodColors } from '@app/common/constants';
 
 export default function AllHistory() {
   const pathname = usePathname();
@@ -11,7 +12,7 @@ export default function AllHistory() {
   const history = useAppSelector(state => state.history);
   const t = useTranslations('History');
   return (
-    <Box className="flex flex-col gap-2.5 items-center w-full border-t border-neutral-200 pt-2.5 pb-5 bg-gradient-to-b from-light-bg-blue from-5% to-body-bg to-95%">
+    <Box className="flex flex-col gap-2.5 items-center w-full border-t border-neutral-200 pt-2.5 pb-5">
       <h3 className="text-center my-10 leading-[60px] lg:text-4xl text-2xl lg:whitespace-pre whitespace-break-spaces text-secondary-blue font-semibold">
         {t('historyRequest')}
       </h3>
@@ -24,9 +25,6 @@ export default function AllHistory() {
             <TableCell align="center" className="font-bold text-color-blue">
               {t('url')}
             </TableCell>
-            <TableCell align="center" className="font-bold text-color-blue">
-              {t('date')}
-            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -37,13 +35,14 @@ export default function AllHistory() {
                 const route = base64Route(item);
                 return (
                   <TableRow key={index}>
-                    <TableCell align="center">{item.method}</TableCell>
+                    <TableCell align="center" sx={{ color: methodColors[item.method] }}>
+                      {item.method}
+                    </TableCell>
                     <TableCell align="center">
-                      <Link key={index} href={`/${lang}/${route}`}>
+                      <Link className="text-color-blue no-underline" key={index} href={`/${lang}/${route}`}>
                         {item.url}
                       </Link>
                     </TableCell>
-                    <TableCell align="center">{new Date(item.date).toLocaleString()}</TableCell>
                   </TableRow>
                 );
               })
