@@ -11,17 +11,19 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useAppSelector } from 'hooks/useStoreHooks';
-import { useRef, useState } from 'react';
+import { useAppSelector, useAppDispatch } from 'hooks/useStoreHooks';
+import { useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { falsyValues } from '@app/common/constants';
 import { base64Route } from '@components/Base64Route/Base64Route';
 import { useRouter, usePathname } from 'next/navigation';
+import { setShowVariables } from '@store/features/response/paramSlice';
 
 export default function Variables() {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
-  const [showVariables, setShowVariables] = useState(false);
+  const { showVariables } = useAppSelector(state => state.params);
   const t = useTranslations('RestClient');
   const { variables } = useAppSelector(state => state.response);
   const inputKey = useRef<HTMLInputElement>(null);
@@ -101,7 +103,11 @@ export default function Variables() {
         </Button>
       </form>
       <div className="flex row mx-2 items-center">
-        <Switch id="showVariables" checked={showVariables} onChange={e => setShowVariables(e.target.checked)} />
+        <Switch
+          id="showVariables"
+          checked={showVariables}
+          onChange={e => dispatch(setShowVariables(e.target.checked))}
+        />
         <label htmlFor="showVariables">{t('showVariables')}</label>
       </div>
       {Object.keys(variables).length !== 0 && showVariables && (

@@ -3,8 +3,8 @@ import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } fro
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { setNewBody } from '../../store/features/response/responseSlice';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
 import JsonTextarea from './json';
+import { setBodyType } from '@store/features/response/paramSlice';
 import { usePathname } from 'next/navigation';
 import { base64Route } from '@components/Base64Route/Base64Route';
 import { useRouter } from 'next/navigation';
@@ -13,7 +13,7 @@ export default function Body() {
   const dispatch = useAppDispatch();
   const t = useTranslations('RestClient');
   const { body } = useAppSelector(state => state.response);
-  const [radio, setRadio] = useState('json');
+  const { bodyType } = useAppSelector(state => state.params);
   const response = useAppSelector(state => state.response);
   const router = useRouter();
 
@@ -35,12 +35,12 @@ export default function Body() {
     >
       <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsBody')}</Typography>
       <FormControl>
-        <RadioGroup row value={radio} onChange={e => setRadio(e.target.value)}>
+        <RadioGroup row value={bodyType} onChange={e => dispatch(setBodyType(e.target.value as 'json' | 'text'))}>
           <FormControlLabel value="json" control={<Radio />} label={t('json')} />
           <FormControlLabel value="text" control={<Radio />} label={t('text')} />
         </RadioGroup>
       </FormControl>
-      {radio === 'text' && (
+      {bodyType === 'text' && (
         <textarea
           value={(body as string) || ''}
           style={{
@@ -54,7 +54,7 @@ export default function Body() {
           onBlur={handleBlurBody}
         ></textarea>
       )}
-      {radio === 'json' && (
+      {bodyType === 'json' && (
         <Box sx={{ height: '100%' }}>
           <JsonTextarea changeBlur={handleBlurBody} />
         </Box>

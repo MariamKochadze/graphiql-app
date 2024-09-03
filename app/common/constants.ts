@@ -4,6 +4,10 @@ export const METHODS = {
   PUT: 'PUT',
   PATCH: 'PATCH',
   DELETE: 'DELETE',
+  OPTIONS: 'OPTIONS',
+  HEAD: 'HEAD',
+  TRACE: 'TRACE',
+  CONNECT: 'CONNECT',
 };
 
 export const HEADERS = [
