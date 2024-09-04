@@ -9,3 +9,8 @@ export interface ResponseState {
   time: number;
   variables: Record<string, string>;
 }
+export interface ParamsState {
+  openPage: 'Headers' | 'Body' | 'Variables';
+  showVariables: boolean;
+  bodyType: 'json' | 'text';
+}

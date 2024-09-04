@@ -8,13 +8,13 @@ export default async function RestFullClient({
   params,
   searchParams,
 }: {
-  params: { method: string; base64: string; body?: string };
+  params: { method: string; base64?: string; body?: string };
   searchParams: Record<string, string>;
 }) {
-  const { url, body } = decodeBase64({ params });
+  const { url, body, submit } = decodeBase64({ params });
   const {
     props: { data, status, error },
-  } = await getServerSideProps({ params, searchParams });
+  } = submit ? await getServerSideProps({ params, searchParams }) : { props: { data: null, status: 0, error: null } };
   return (
     <>
       <RestPage />
@@ -27,6 +27,7 @@ export default async function RestFullClient({
         url={url}
         method={params.method}
         body={body}
+        submit={submit}
       />
     </>
   );

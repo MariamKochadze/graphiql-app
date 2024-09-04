@@ -6,7 +6,7 @@ import { setNewBody } from '@store/features/response/responseSlice';
 import { githubLight } from '@uiw/codemirror-theme-github';
 import { Typography } from '@mui/material';
 
-function JsonTextarea() {
+function JsonTextarea({ changeBlur }: { changeBlur: (e) => void }) {
   const [error, setError] = React.useState<string | null>(null);
   const { body, variables } = useAppSelector(state => state.response);
   const dispatch = useAppDispatch();
@@ -33,6 +33,7 @@ function JsonTextarea() {
         theme={githubLight}
         extensions={[javascript({ jsx: true })]}
         onChange={onChange}
+        onBlur={changeBlur}
       />
       {error && body && <Typography sx={{ color: 'red' }}>{error}</Typography>}
     </>
