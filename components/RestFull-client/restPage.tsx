@@ -8,7 +8,9 @@ import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { selectUser } from '@store/selectors';
 import { useEffect } from 'react';
+import { setNewHistory } from '@store/features/history/historySlice';
 import { setNewUrl } from '@store/features/response/responseSlice';
+import { methodColors } from '../../app/common/constants';
 export default function RestPage() {
   const dispatch = useAppDispatch();
   const t = useTranslations('RestClient');
@@ -45,6 +47,7 @@ export default function RestPage() {
     e.preventDefault();
     const route = base64Route(response, true);
     const lang = pathname.split('/')[1];
+    dispatch(setNewHistory({ email: user?.email || '', response }));
     router.push(`/${lang}${route}`);
   }
   return user ? (
@@ -61,10 +64,11 @@ export default function RestPage() {
               borderRadius: '15px 0 0 15px',
               height: '40px',
               backgroundColor: 'var(--color-gray)',
+              color: `${methodColors[method]}`,
             }}
           >
             {Object.keys(METHODS).map(key => (
-              <MenuItem key={key} value={key}>
+              <MenuItem key={key} value={key} sx={{ color: `${methodColors[key]}` }}>
                 {METHODS[key]}
               </MenuItem>
             ))}

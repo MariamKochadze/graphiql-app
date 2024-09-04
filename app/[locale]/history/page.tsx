@@ -1,3 +1,4 @@
+import History from '@components/History/history';
 export default function Page() {
-  return <h1>History page</h1>;
+  return <History />;
 }

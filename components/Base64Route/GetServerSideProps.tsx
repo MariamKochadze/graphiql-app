@@ -16,7 +16,7 @@ export async function getServerSideProps({
   try {
     const response = await fetch(url, {
       method: params.method,
-      body: body ? JSON.stringify(bodyObject) : undefined,
+      body: Object.keys(bodyObject || {}).length > 0 ? JSON.stringify(bodyObject) : undefined,
       headers: {
         ...searchParams,
       },

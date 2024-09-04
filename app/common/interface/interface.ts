@@ -9,6 +9,10 @@ export interface ResponseState {
   time: number;
   variables: Record<string, string>;
 }
+
+export interface RequestHistory extends ResponseState {
+  date: Date;
+}
 export interface ParamsState {
   openPage: 'Headers' | 'Body' | 'Variables';
   showVariables: boolean;

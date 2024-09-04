@@ -55,3 +55,15 @@ export const httpColors = {
   '5': '#1976d2',
   '0': '#eaecf0',
 };
+
+export const methodColors = {
+  GET: '#28a745',
+  PUT: '#007bff',
+  POST: '#fd7e14',
+  DELETE: '#dc3545',
+  PATCH: '#6f42c1',
+  HEAD: '#20c997',
+  OPTIONS: '#ffc107',
+  TRACE: '#6c757d',
+  CONNECT: '#343a40',
+};
