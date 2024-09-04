@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from 'utils/firebase/firebase.utils';
 
-// Define a type for a simplified user object
 export type SimpleUser = {
   uid: string;
   email: string | null;
@@ -35,7 +34,6 @@ export const signUpUser = createAsyncThunk(
 
       await createUserDocumentFromAuth(userAuth.user, { displayName });
 
-      // Return a simplified user object
       return {
         uid: userAuth.user.uid,
         email: userAuth.user.email,

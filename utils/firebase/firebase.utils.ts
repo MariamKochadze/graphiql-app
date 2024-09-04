@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  NextOrObserver,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
@@ -10,6 +11,7 @@ import {
   UserCredential,
 } from 'firebase/auth';
 import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
@@ -72,7 +74,11 @@ export const createAuthUserWithEmailAndPassword = async (
 
     return userCredential;
   } catch (error) {
-    console.error('Error creating user:', error);
+    if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+      toast.error('Email is already in use!');
+    } else {
+      toast.error('Something went wrong!');
+    }
     return undefined;
   }
 };
@@ -84,10 +90,30 @@ export const signInAuthUserWithEmailAndPassword = async (
   if (!email || !password) {
     return;
   }
-
-  return await signInWithEmailAndPassword(auth, email, password);
+  try {
+    return await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    if (error.message === 'Firebase: Error (auth/invalid-credential).') {
+      toast.error('Invalid email or password!');
+    } else {
+      toast.error('Something went wrong!');
+    }
+  }
 };
 
 export const signOutUser = async () => await signOut(auth);
 
-export const onAuthStateChangedListener = (callback: (user: User | null) => void) => onAuthStateChanged(auth, callback);
+export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = (): Promise<User | null> => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      userAuth => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};

@@ -1,9 +1,9 @@
 'use client';
 import LocaleSwitcher from '@components/LocaleSwitcher/LocaleSwitcher';
-import { setUser } from '@store/userSlice';
-import { onAuthStateChangedListener, signOutUser } from '@utils/firebase/firebase.utils';
-import { User } from 'firebase/auth';
+import { setUser, SimpleUser } from '@store/userSlice';
+import { getCurrentUser, signOutUser } from '@utils/firebase/firebase.utils';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { Link } from '../../navigation';
 import { selectUser } from '../../store/selectors/index';
@@ -30,14 +30,24 @@ export const Header = () => {
 
   const handleSignOut = async () => {
     await signOutUser();
+    dispatch(setUser(null));
+    toast.success('Successfully signed out');
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user: User | null) => {
-      dispatch(setUser(user));
-    });
+    getCurrentUser().then(user => {
+      let simpleUser: SimpleUser | null = null;
 
-    return () => unsubscribe();
+      if (user) {
+        simpleUser = {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+        };
+      }
+
+      dispatch(setUser(simpleUser));
+    });
   }, [dispatch]);
   return (
     <header

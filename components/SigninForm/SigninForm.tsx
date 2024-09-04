@@ -5,7 +5,8 @@ import { useAppDispatch } from 'hooks/useStoreHooks';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { setUser } from 'store/userSlice';
+import { toast } from 'react-toastify';
+import { setUser, SimpleUser } from 'store/userSlice';
 import { signInAuthUserWithEmailAndPassword } from 'utils/firebase/firebase.utils';
 import { ValidationError } from 'yup';
 import { signInValidationSchema } from './validation';
@@ -48,9 +49,12 @@ const SignInForm = () => {
       const userCredential = await signInAuthUserWithEmailAndPassword(email, password);
 
       if (userCredential) {
-        const user: User = userCredential.user;
+        const { uid, email, displayName }: User = userCredential.user;
+        const simpleUser: SimpleUser = { uid, email, displayName };
 
-        dispatch(setUser(user));
+        toast.success(`Welcome back, ${displayName}`);
+
+        dispatch(setUser(simpleUser));
         router.push('/');
       }
     } catch (error) {
