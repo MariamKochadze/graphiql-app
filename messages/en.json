@@ -58,7 +58,10 @@
     "text": "Text",
     "variables": "Variables",
     "variable": "Variable",
-    "showVariables": "Show Variables"
+    "showVariables": "Show Variables",
+    "edit": "Edit",
+    "keyExist": "Key already exists",
+    "variableExist": "Variable already exists"
   },
   "LoaderPage": {
     "cancel": "Cancel"

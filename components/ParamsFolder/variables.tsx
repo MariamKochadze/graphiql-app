@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useAppSelector, useAppDispatch } from 'hooks/useStoreHooks';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { falsyValues } from '@app/common/constants';
 import { base64Route } from '@components/Base64Route/Base64Route';
@@ -20,6 +20,8 @@ import { useRouter, usePathname } from 'next/navigation';
 import { setShowVariables } from '@store/features/response/paramSlice';
 
 export default function Variables() {
+  const [editInput, setEditInput] = useState({ key: '', edit: false });
+  const [error, setError] = useState('');
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
@@ -47,13 +49,28 @@ export default function Variables() {
 
       key = key.replace(new RegExp(' ', 'g'), '_');
       const variableNew = { ...variables };
-      variableNew[key] = value;
-      const responseNew = { ...response };
-      responseNew.variables = variableNew;
-      const route = base64Route(responseNew);
-      const lang = pathname.split('/')[1];
-      router.push(`/${lang}${route}`);
+      if (editInput.edit) {
+        delete variableNew[editInput.key];
+        setEditInput({ key: '', edit: false });
+      }
+      if (!variableNew[key]) {
+        variableNew[key] = value;
+        const responseNew = { ...response };
+        responseNew.variables = variableNew;
+        const route = base64Route(responseNew);
+        const lang = pathname.split('/')[1];
+        router.push(`/${lang}${route}`);
+        setError('');
+      } else {
+        setError(`${key} ${t('variableExist')}`);
+      }
     }
+  }
+
+  function handleEditVariable(key: string) {
+    (inputKey.current as HTMLInputElement).value = key;
+    (inputValue.current as HTMLInputElement).value = variables[key];
+    setEditInput({ key, edit: true });
   }
 
   function handleDeleteVariable(key: string) {
@@ -78,7 +95,7 @@ export default function Variables() {
       }}
     >
       <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsVariables')}</Typography>
-      <form onSubmit={setVariables} className="flex flex-row w-full">
+      <form onSubmit={setVariables} className="flex flex-row w-full relative pb-5">
         <input
           type="text"
           list="headers"
@@ -99,8 +116,9 @@ export default function Variables() {
           type="submit"
           sx={{ color: 'var(--color-purple)', border: '1px solid var(--color-purple)', width: '250px' }}
         >
-          {t('addHeader')}
+          {editInput.edit ? t('edit') : t('addHeader')}
         </Button>
+        <p className="w-full text-color-red size-4 text-center absolute bottom-0">{error ? error : ''}</p>
       </form>
       <div className="flex row mx-2 items-center">
         <Switch
@@ -127,11 +145,32 @@ export default function Variables() {
                 {Object.keys(variables)
                   .map(key => (
                     <TableRow key={key} sx={{ color: 'var(--color-purple)' }}>
-                      <TableCell sx={{ color: 'var(--color-purple)' }}>{key}</TableCell>
-                      <TableCell sx={{ color: 'var(--color-purple)' }}>{variables[key]}</TableCell>
+                      <TableCell sx={{ color: 'var(--color-purple)' }}>
+                        <input
+                          className="focus:outline-none hover:outline-none w-full h-full hover:border-t-light-blue hover:rounded-md"
+                          type="text"
+                          value={key}
+                          readOnly
+                        />
+                      </TableCell>
+                      <TableCell sx={{ color: 'var(--color-purple)' }}>
+                        <input
+                          className="focus:outline-none hover:outline-none w-full h-full hover:border-t-light-blue hover:rounded-md"
+                          type="text"
+                          value={variables[key]}
+                          readOnly
+                        />
+                      </TableCell>
                       <TableCell>
                         <Button sx={{ color: 'var(--color-purple)' }} onClick={() => handleDeleteVariable(key)}>
                           {t('clear')}
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          sx={{ color: 'var(--color-purple)' }}
+                          onClick={() => handleEditVariable(key)}
+                        >
+                          {t('edit')}
                         </Button>
                       </TableCell>
                     </TableRow>

@@ -58,7 +58,10 @@
     "text": "Текст",
     "variables": "Переменные",
     "variable": "Переменная",
-    "showVariables": "Показать переменные"
+    "showVariables": "Показать переменные",
+    "edit": "Редактировать",
+    "keyExists": "Ключ уже существует",
+    "variableExist": "Переменная уже существует"
   },
   "LoaderPage": {
     "cancel": "Отменить"
