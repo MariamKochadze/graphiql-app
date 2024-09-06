@@ -39,7 +39,7 @@ export default function AllHistory() {
                       {item.method}
                     </TableCell>
                     <TableCell align="center">
-                      <Link className="text-color-blue no-underline" key={index} href={`/${lang}/${route}`}>
+                      <Link className="text-color-blue no-underline" key={index} href={`/${lang}${route}`}>
                         {item.url}
                       </Link>
                     </TableCell>
