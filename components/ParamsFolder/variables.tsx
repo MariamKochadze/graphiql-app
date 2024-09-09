@@ -11,7 +11,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useAppSelector, useAppDispatch } from 'hooks/useStoreHooks';
+import { useAppSelector, useAppDispatch } from '../../hooks/useStoreHooks';
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { falsyValues } from '@app/common/constants';

@@ -16,7 +16,7 @@ export default function Params() {
   return (
     user && (
       <Box className="w-full px-2 md:pb-6 lg:pb-0 pb-8 lg:px-5 border border-color-gray">
-        <Tabs value={openPage} onChange={(_, value) => dispatch(setOpenParams(value))}>
+        <Tabs data-testid="params-tabs" value={openPage} onChange={(_, value) => dispatch(setOpenParams(value))}>
           <Tab
             value="Body"
             label={t('body')}
