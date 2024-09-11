@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../../hooks/useStoreHooks';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { falsyValues } from '@app/common/constants';
 import { base64Route } from '@components/Base64Route/Base64Route';
@@ -28,16 +28,16 @@ export default function Variables() {
   const { showVariables } = useAppSelector(state => state.params);
   const t = useTranslations('RestClient');
   const { variables } = useAppSelector(state => state.response);
-  const inputKey = useRef<HTMLInputElement>(null);
-  const inputValue = useRef<HTMLInputElement>(null);
+  const [inputKey, setInputKey] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
   const response = useAppSelector(state => state.response);
 
   function setVariables(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (inputKey.current && inputValue.current) {
-      let key: string = inputKey.current.value;
-      let value: string = inputValue.current.value;
+    if (inputKey && inputValue) {
+      let key: string = inputKey;
+      let value: string = inputValue;
       if (!parseFloat(value) && (!value.startsWith('"') || !value.endsWith('"')) && !falsyValues.includes(value)) {
         if (!value.startsWith('"')) {
           value = `"${value}`;
@@ -68,8 +68,8 @@ export default function Variables() {
   }
 
   function handleEditVariable(key: string) {
-    (inputKey.current as HTMLInputElement).value = key;
-    (inputValue.current as HTMLInputElement).value = variables[key];
+    setInputKey(key);
+    setInputValue(variables[key]);
     setEditInput({ key, edit: true });
   }
 
@@ -100,14 +100,16 @@ export default function Variables() {
           type="text"
           list="headers"
           placeholder={t('variable')}
-          ref={inputKey}
+          value={inputKey}
+          onChange={e => setInputKey(e.target.value)}
           required
           className="outline-none w-full h-10 border border-gray-400 px-5 transition duration-300 bg-gray-400 focus:border-purple-500 focus:bg-white hover:border-purple-500"
         />
         <input
           type="text"
           placeholder={t('value')}
-          ref={inputValue}
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
           required
           className="outline-none w-full h-10 border border-gray-400 px-5 transition duration-300 bg-gray-400 focus:border-purple-500 focus:bg-white hover:border-purple-500"
         />

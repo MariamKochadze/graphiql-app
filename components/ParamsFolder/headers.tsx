@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useAppSelector } from '../../hooks/useStoreHooks';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { base64Route } from '@components/Base64Route/Base64Route';
@@ -26,15 +26,15 @@ export default function Headers() {
   const t = useTranslations('RestClient');
   const { headers } = useAppSelector(state => state.response);
   const response = useAppSelector(state => state.response);
-  const inputKey = useRef<HTMLInputElement>(null);
-  const inputValue = useRef<HTMLInputElement>(null);
+  const [inputKey, setInputKey] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
 
   function setHeaders(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (inputKey.current && inputValue.current) {
-      const key = inputKey.current.value;
-      const value = inputValue.current.value;
+    if (inputKey && inputValue) {
+      const key = inputKey;
+      const value = inputValue;
       const headerNew = { ...headers };
       if (editInput.edit) {
         delete headerNew[editInput.key];
@@ -42,8 +42,8 @@ export default function Headers() {
       }
       if (!headerNew[key]) {
         headerNew[key] = value;
-        inputKey.current.value = '';
-        inputValue.current.value = '';
+        setInputKey('');
+        setInputValue('');
         const responseNew = { ...response };
         responseNew.headers = headerNew;
         const route = base64Route(responseNew);
@@ -56,8 +56,8 @@ export default function Headers() {
     }
   }
   function handleEditHeaders(key: string) {
-    (inputKey.current as HTMLInputElement).value = key;
-    (inputValue.current as HTMLInputElement).value = headers[key];
+    setInputKey(key);
+    setInputValue(headers[key]);
     setEditInput({ key, edit: true });
   }
 
@@ -88,7 +88,8 @@ export default function Headers() {
           type="text"
           list="headers"
           placeholder={t('key')}
-          ref={inputKey}
+          value={inputKey}
+          onChange={e => setInputKey(e.target.value)}
           required
           className="outline-none w-full h-10 border border-gray-400 px-5 transition duration-300 bg-gray-400 focus:border-purple-500 focus:bg-white hover:border-purple-500"
         />
@@ -100,7 +101,8 @@ export default function Headers() {
         <input
           type="text"
           placeholder={t('value')}
-          ref={inputValue}
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
           required
           className="outline-none w-full h-10 border border-gray-400 px-5 transition duration-300 bg-gray-400 focus:border-purple-500 focus:bg-white hover:border-purple-500"
         />
