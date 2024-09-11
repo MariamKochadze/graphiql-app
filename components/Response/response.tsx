@@ -7,12 +7,11 @@ import { setNewResponse } from '../../store/features/response/responseSlice';
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { selectUser } from '@store/selectors';
-import { Controlled as JsonTextarea } from 'react-codemirror2';
 import { httpStatusDescriptions, httpColors } from '@app/common/constants';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/neat.css';
-import 'codemirror/mode/javascript/javascript';
 import { removeBodyVariables } from '@components/Base64Route/BodyVariables';
+import CodeMirror from '@uiw/react-codemirror';
+import { json } from '@codemirror/lang-json';
+import { jsonTheme } from '@app/common/constants';
 
 export default function Response({
   status,
@@ -49,18 +48,6 @@ export default function Response({
     variables,
   };
 
-  const options = {
-    mode: { name: 'javascript', json: true },
-    theme: 'neat',
-    lineNumbers: true,
-    tabSize: 2,
-    indentWithTabs: true,
-    autoCloseBrackets: true,
-    matchBrackets: true,
-    lineWrapping: true,
-    readOnly: true,
-    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-  };
   const colorStatus: string = httpColors[response.status.toString()[0]];
 
   useEffect(() => {
@@ -102,8 +89,8 @@ export default function Response({
 
         <Box
           sx={{
-            height: 300,
-            overflowY: 'hidden',
+            maxHeight: 500,
+            overflowY: 'scroll',
             display: 'flex',
             flexDirection: 'column',
             gap: 1,
@@ -111,21 +98,9 @@ export default function Response({
           }}
         >
           {error !== null ? (
-            <JsonTextarea
-              value={JSON.stringify(error, null, 2)}
-              options={options}
-              onBeforeChange={(editor, data, value) => {
-                editor.setValue(JSON.stringify(value, null, 2));
-              }}
-            />
+            <CodeMirror readOnly theme={jsonTheme} value={JSON.stringify(error, null, 2)} extensions={[json()]} />
           ) : (
-            <JsonTextarea
-              value={JSON.stringify(data, null, 2)}
-              options={options}
-              onBeforeChange={(editor, data, value) => {
-                editor.setValue(JSON.stringify(value, null, 2));
-              }}
-            />
+            <CodeMirror readOnly theme={jsonTheme} value={JSON.stringify(data, null, 2)} extensions={[json()]} />
           )}
         </Box>
       </Box>

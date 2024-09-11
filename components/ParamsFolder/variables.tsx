@@ -124,6 +124,7 @@ export default function Variables() {
       </form>
       <div className="flex row mx-2 items-center">
         <Switch
+          data-testid="showVariables"
           id="showVariables"
           checked={showVariables}
           onChange={e => dispatch(setShowVariables(e.target.checked))}
@@ -152,6 +153,7 @@ export default function Variables() {
                           className="focus:outline-none hover:outline-none w-full h-full hover:border-t-light-blue hover:rounded-md"
                           type="text"
                           value={key}
+                          name={key}
                           readOnly
                         />
                       </TableCell>
@@ -160,6 +162,7 @@ export default function Variables() {
                           className="focus:outline-none hover:outline-none w-full h-full hover:border-t-light-blue hover:rounded-md"
                           type="text"
                           value={variables[key]}
+                          name={variables[key]}
                           readOnly
                         />
                       </TableCell>
