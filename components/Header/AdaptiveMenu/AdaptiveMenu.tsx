@@ -7,9 +7,10 @@ import { useState } from 'react';
 interface UserProps {
   user: SimpleUser | null;
   onSignOut: () => void;
+  isSticky: boolean;
 }
 
-const AdaptiveMenu = ({ user, onSignOut }: UserProps) => {
+const AdaptiveMenu = ({ user, onSignOut, isSticky }: UserProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations('HomePage');
   const router = useRouter();
@@ -63,18 +64,53 @@ const AdaptiveMenu = ({ user, onSignOut }: UserProps) => {
             {!user ? (
               <>
                 <li>
-                  <Button variant="contained" fullWidth onClick={handleButtonClick}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: isSticky ? 'white' : '',
+                      color: isSticky ? '#1a66ff' : '',
+                      ':hover': {
+                        backgroundColor: isSticky ? '' : '#0a59a7',
+                        color: isSticky ? 'white' : '',
+                      },
+                    }}
+                    fullWidth
+                    onClick={handleButtonClick}
+                  >
                     {t('sign-in')}
                   </Button>
                 </li>
                 <li>
-                  <Button variant="contained" fullWidth onClick={handleButtonClick}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: isSticky ? 'white' : '',
+                      color: isSticky ? '#1a66ff' : '',
+                      ':hover': {
+                        backgroundColor: isSticky ? '' : '#0a59a7',
+                        color: isSticky ? 'white' : '',
+                      },
+                    }}
+                    fullWidth
+                    onClick={handleButtonClick}
+                  >
                     {t('sign-up')}
                   </Button>
                 </li>
               </>
             ) : (
-              <Button variant="contained" onClick={onSignOut}>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: isSticky ? 'white' : '',
+                  color: isSticky ? '#1a66ff' : '',
+                  ':hover': {
+                    backgroundColor: isSticky ? '' : '#0a59a7',
+                    color: isSticky ? 'white' : '',
+                  },
+                }}
+                onClick={onSignOut}
+              >
                 {t('sign-out')}
               </Button>
             )}
