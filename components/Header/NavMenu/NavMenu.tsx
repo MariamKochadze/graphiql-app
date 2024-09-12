@@ -19,6 +19,22 @@ const NavMenu = ({ onSignOut, user, isSticky }: UserProps) => {
   return (
     <nav className="md:flex hidden">
       <ul className="flex justify-between items-center gap-4">
+        <li>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: isSticky ? 'white' : '',
+              color: isSticky ? '#1a66ff' : '',
+              ':hover': {
+                backgroundColor: isSticky ? '' : '#0a59a7',
+                color: isSticky ? 'white' : '',
+              },
+            }}
+            onClick={() => router.push('/')}
+          >
+            {t('main-page')}
+          </Button>
+        </li>
         {!user ? (
           <>
             <li>

@@ -20,6 +20,7 @@
     "sign-in": "Войти",
     "sign-up": "Зарегистрироваться",
     "sign-out": "Выход",
+    "main-page": "Дом",
     "rest-client": "Запрос REST",
     "graphiql-client": "Запрос GraphQL",
     "history": "История"

@@ -20,6 +20,7 @@
     "sign-in": "Sign In",
     "sign-up": "Sign Up",
     "sign-out": "Sign Out",
+    "main-page": "Main Page",
     "rest-client": "REST Client",
     "graphiql-client": "GraphiQL Client",
     "history": "History"

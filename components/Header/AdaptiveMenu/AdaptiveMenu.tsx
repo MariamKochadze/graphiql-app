@@ -61,6 +61,22 @@ const AdaptiveMenu = ({ user, onSignOut, isSticky }: UserProps) => {
           className="lg:hidden fixed top-[78px] right-0 left-0 shadow-shadow-overlay h-[40vh] bg-regal-white pt-10 z-30"
         >
           <ul className="flex justify-center flex-col items-center gap-4">
+            <li>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: isSticky ? 'white' : '',
+                  color: isSticky ? '#1a66ff' : '',
+                  ':hover': {
+                    backgroundColor: isSticky ? '' : '#0a59a7',
+                    color: isSticky ? 'white' : '',
+                  },
+                }}
+                onClick={() => router.push('/')}
+              >
+                {t('main-page')}
+              </Button>
+            </li>
             {!user ? (
               <>
                 <li>
