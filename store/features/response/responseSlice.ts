@@ -29,9 +29,7 @@ const responseSlice = createSlice({
 
     setNewResponse: (state, actions: PayloadAction<object>) => {
       Object.entries(actions.payload).forEach(([key, value]) => {
-        if (state[key]) {
-          state[key] = value;
-        }
+        state[key] = value;
       });
     },
   },

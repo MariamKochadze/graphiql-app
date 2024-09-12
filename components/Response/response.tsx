@@ -7,61 +7,49 @@ import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { selectUser } from '@store/selectors';
 import { httpStatusDescriptions, httpColors } from '@app/common/constants';
-import { removeBodyVariables } from '@components/Base64Route/BodyVariables';
 import CodeMirror from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { jsonTheme } from '@app/common/constants';
 
 export default function Response({
-  status,
-  data,
-  error,
   headers,
   url,
   method,
   body,
-  submit,
   clientType,
-  urlSdl = '',
 }: {
-  status: string | null | number;
-  data: unknown | null;
-  error: string | null;
   headers: Record<string, string>;
   url: string;
   method: string;
   body: string | null | undefined;
-  submit: boolean;
   clientType: 'rest' | 'graphql';
-  urlSdl: string;
 }) {
   const user = useAppSelector(selectUser);
+  const response = useAppSelector(state => state.response);
   const t = useTranslations('RestClient');
   const dispatch = useAppDispatch();
-  const { bodyWithVariables, variables } = removeBodyVariables(body);
-  const response = {
-    status: parseInt(status as string) || 0,
+  const responseUpdate = {
     headers,
-    url: url || '',
+    url,
     method,
-    body: bodyWithVariables !== '{}' && bodyWithVariables ? bodyWithVariables : '',
-    response: '',
-    size: 0,
-    time: 0,
-    variables,
-    urlSdl: urlSdl || '',
+    body: body || '',
     clientType,
   };
+  dispatch(
+    setNewResponse({
+      headers: headers,
+    })
+  );
 
   const colorStatus: string = httpColors[response.status.toString()[0]];
 
   useEffect(() => {
-    dispatch(setNewResponse(response));
-  }, [dispatch, response]);
+    dispatch(setNewResponse(responseUpdate));
+  }, [response.response]);
 
   return (
     user &&
-    submit && (
+    response.response && (
       <Box
         sx={{
           borderTop: '1px solid var(--color-gray)',
@@ -102,11 +90,12 @@ export default function Response({
             border: '1px solid var(--color-gray)',
           }}
         >
-          {error !== null ? (
-            <CodeMirror readOnly theme={jsonTheme} value={JSON.stringify(error, null, 2)} extensions={[json()]} />
-          ) : (
-            <CodeMirror readOnly theme={jsonTheme} value={JSON.stringify(data, null, 2)} extensions={[json()]} />
-          )}
+          <CodeMirror
+            readOnly
+            theme={jsonTheme}
+            value={JSON.stringify(response.response, null, 2)}
+            extensions={[json()]}
+          />
         </Box>
       </Box>
     )

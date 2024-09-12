@@ -51,6 +51,7 @@
     "body": "Body",
     "paramsHeaders": "Params Headers",
     "paramsBody": "Params Body",
+    "params": "Params",
     "paramsVariables": "Params Variables",
     "clear": "Clear",
     "none": "None",

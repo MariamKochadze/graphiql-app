@@ -55,13 +55,15 @@
     "clear": "Очистить",
     "none": "без тела",
     "json": "JSON",
+    "params": "Параметры",
     "text": "Текст",
     "variables": "Переменные",
     "variable": "Переменная",
     "showVariables": "Показать переменные",
     "edit": "Изменить",
     "keyExists": "Ключ уже существует",
-    "variableExist": "Переменная уже существует"
+    "variableExist": "Переменная уже существует",
+    "query": "Запрос"
   },
   "LoaderPage": {
     "cancel": "Отменить"

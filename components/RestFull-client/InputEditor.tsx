@@ -9,9 +9,10 @@ import { useTranslations } from 'next-intl';
 import { selectUser } from '@store/selectors';
 import { useEffect } from 'react';
 import { setNewHistory } from '@store/features/history/historySlice';
-import { setNewUrl } from '@store/features/response/responseSlice';
+import { setNewResponse, setNewUrl } from '@store/features/response/responseSlice';
 import { methodColors } from '../../app/common/constants';
 import SDLInput from '@components/ParamsFolder/inputSDL';
+import { getServerSideProps } from '@components/Base64Route/GetServerSideProps';
 export default function InputEditor() {
   const dispatch = useAppDispatch();
   const t = useTranslations('RestClient');
@@ -36,7 +37,7 @@ export default function InputEditor() {
     router.push(`/${lang}${route}`);
   }
 
-  function handleChangeUrl(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleBlurUrl(e: React.ChangeEvent<HTMLInputElement>) {
     const responseNew = { ...response };
     responseNew.url = e.target.value;
     const route = base64Route(responseNew);
@@ -48,11 +49,23 @@ export default function InputEditor() {
     // write function onChange Sdl
   }
 
-  function submitForm(e: React.FormEvent<HTMLFormElement>) {
+  async function submitForm(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const route = base64Route(response, true);
+    const route = base64Route(response);
     const lang = pathname.split('/')[1];
-    dispatch(setNewHistory({ email: user?.email || '', response }));
+    const responseForHistory = { ...response };
+    responseForHistory.response = '';
+    responseForHistory.status = 0;
+    dispatch(setNewHistory({ email: user?.email || '', response: responseForHistory }));
+    const {
+      props: { data, status, error },
+    }: { props: { data: unknown; status: number; error: string | null } } = await getServerSideProps(response);
+    dispatch(
+      setNewResponse({
+        response: data ? data : error,
+        status,
+      })
+    );
     router.push(`/${lang}${route}`);
   }
   return user ? (
@@ -83,11 +96,11 @@ export default function InputEditor() {
           <input
             type="text"
             name="url"
+            value={url}
             placeholder="https://example.com"
             required
-            value={url}
             autoComplete="on"
-            onBlur={handleChangeUrl}
+            onBlur={handleBlurUrl}
             onChange={e => dispatch(setNewUrl(e.target.value))}
             className="bg-color-gray border-color-gray outline-none px-1 w-full h-full rounded-r-2xl transition duration-300 hover:border-light-blue border-2 focus:bg-white focus:border-light-blue focus:shadow-md focus:shadow-blue-500 focus:bg-body-bg"
           />
