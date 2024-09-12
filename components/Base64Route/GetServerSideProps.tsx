@@ -9,6 +9,7 @@ export async function getServerSideProps(response: ResponseState) {
     query: body,
     variables,
   };
+  // you can make two function for restfull and qraphql
   // TODO: change code For SDL response
   const restFullBody = addBodyVariables(body, variables);
   try {

@@ -1,4 +1,5 @@
 export function addBodyVariables(body: unknown, variables: Record<string, string>) {
+  // only for restfull
   let bodyWithVariables: string = body as string;
   if (variables && body) {
     Object.keys(variables).forEach(key => {

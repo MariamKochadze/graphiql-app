@@ -12,6 +12,7 @@ function JsonTextarea({ changeBlur }: { changeBlur: (e) => void }) {
   const dispatch = useAppDispatch();
   const [value, setValue] = React.useState(body);
   const onChange = React.useCallback(val => {
+    // add your own validation if clientType === qraphql
     setValue(val);
     dispatch(setNewBody(val));
     try {
