@@ -8,13 +8,12 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import Variables from '../variables';
 import { setNewResponse } from '@store/features/response/responseSlice';
-import { ResponseState } from '@app/common/interface/interface';
 
 vi.mock('next-intl', () => ({
   useTranslations: (key: string) => (value: string) => english[key][value],
 }));
 
-const initialState: ResponseState = {
+const initialState = {
   url: '',
   method: 'GET',
   headers: {},

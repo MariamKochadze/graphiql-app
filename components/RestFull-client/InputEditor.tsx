@@ -11,10 +11,11 @@ import { useEffect } from 'react';
 import { setNewHistory } from '@store/features/history/historySlice';
 import { setNewUrl } from '@store/features/response/responseSlice';
 import { methodColors } from '../../app/common/constants';
-export default function RestPage() {
+import SDLInput from '@components/ParamsFolder/inputSDL';
+export default function InputEditor() {
   const dispatch = useAppDispatch();
   const t = useTranslations('RestClient');
-  const { method, url } = useAppSelector(state => state.response);
+  const { method, url, clientType, urlSdl } = useAppSelector(state => state.response);
   const { response } = useAppSelector(state => state);
   const router = useRouter();
   const pathname = usePathname();
@@ -43,6 +44,10 @@ export default function RestPage() {
     router.push(`/${lang}${route}`);
   }
 
+  function handleChangeSdl() {
+    // write function onChange Sdl
+  }
+
   function submitForm(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const route = base64Route(response, true);
@@ -54,25 +59,27 @@ export default function RestPage() {
     <Box className="flex flex-col gap-2.5 w-full border-t border-neutral-200 pt-2.5 pb-5">
       <form className="flex flex-row gap-1 lg:10 md:gap-5 px-1 lg:px-5" onSubmit={submitForm}>
         <div className="w-full flex flex-row">
-          <Select
-            value={method}
-            name="method"
-            onChange={handleChangeMethod}
-            id="select"
-            sx={{
-              width: '120px',
-              borderRadius: '15px 0 0 15px',
-              height: '40px',
-              backgroundColor: 'var(--color-gray)',
-              color: `${methodColors[method]}`,
-            }}
-          >
-            {Object.keys(METHODS).map(key => (
-              <MenuItem key={key} value={key} sx={{ color: `${methodColors[key]}` }}>
-                {METHODS[key]}
-              </MenuItem>
-            ))}
-          </Select>
+          {clientType === 'rest' && (
+            <Select
+              value={method}
+              name="method"
+              onChange={handleChangeMethod}
+              id="select"
+              sx={{
+                width: '120px',
+                borderRadius: '15px 0 0 15px',
+                height: '40px',
+                backgroundColor: 'var(--color-gray)',
+                color: `${methodColors[method]}`,
+              }}
+            >
+              {Object.keys(METHODS).map(key => (
+                <MenuItem key={key} value={key} sx={{ color: `${methodColors[key]}` }}>
+                  {METHODS[key]}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
           <input
             type="text"
             name="url"
@@ -89,6 +96,7 @@ export default function RestPage() {
           {t('send')}
         </Button>
       </form>
+      {clientType === 'graphql' && <SDLInput onChange={handleChangeSdl} value={urlSdl} />}
     </Box>
   ) : (
     <Box>Redirecting...</Box>

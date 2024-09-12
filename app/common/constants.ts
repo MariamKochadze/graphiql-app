@@ -13,6 +13,10 @@ export const METHODS = {
   CONNECT: 'CONNECT',
 };
 
+export const METHODS_GRAPHQL = {
+  GRAPHQL: 'GRAPHQL',
+};
+
 export const HEADERS = [
   'Accept',
   'Accept-Encoding',

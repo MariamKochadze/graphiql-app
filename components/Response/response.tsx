@@ -1,6 +1,5 @@
 'use client';
 
-import { ResponseState } from '@app/common/interface/interface';
 import { Box, Grid, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { setNewResponse } from '../../store/features/response/responseSlice';
@@ -22,6 +21,8 @@ export default function Response({
   method,
   body,
   submit,
+  clientType,
+  urlSdl = '',
 }: {
   status: string | null | number;
   data: unknown | null;
@@ -31,12 +32,14 @@ export default function Response({
   method: string;
   body: string | null | undefined;
   submit: boolean;
+  clientType: 'rest' | 'graphql';
+  urlSdl: string;
 }) {
   const user = useAppSelector(selectUser);
   const t = useTranslations('RestClient');
   const dispatch = useAppDispatch();
   const { bodyWithVariables, variables } = removeBodyVariables(body);
-  const response: ResponseState = {
+  const response = {
     status: parseInt(status as string) || 0,
     headers,
     url: url || '',
@@ -46,6 +49,8 @@ export default function Response({
     size: 0,
     time: 0,
     variables,
+    urlSdl: urlSdl || '',
+    clientType,
   };
 
   const colorStatus: string = httpColors[response.status.toString()[0]];

@@ -19,7 +19,7 @@ export default function Params() {
         <Tabs data-testid="params-tabs" value={openPage} onChange={(_, value) => dispatch(setOpenParams(value))}>
           <Tab
             value="Body"
-            label={t('body')}
+            label={response.clientType === 'graphql' ? t('query') : t('body')}
             className={
               response.body
                 ? "after:content-[''] after:block after:w-2 after:h-2 after:bg-color-green after:absolute after:top-1 after:right-1 after:rounded-full"

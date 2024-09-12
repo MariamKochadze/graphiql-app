@@ -61,7 +61,8 @@
     "showVariables": "Show Variables",
     "edit": "Edit",
     "keyExist": "Key already exists",
-    "variableExist": "Variable already exists"
+    "variableExist": "Variable already exists",
+    "query": "Query"
   },
   "LoaderPage": {
     "cancel": "Cancel"

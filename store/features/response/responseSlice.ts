@@ -11,6 +11,8 @@ const initialState: ResponseState = {
   status: 0,
   size: 0,
   time: 0,
+  urlSdl: '',
+  clientType: 'rest',
 };
 
 const responseSlice = createSlice({
@@ -25,8 +27,12 @@ const responseSlice = createSlice({
       state.body = actions.payload;
     },
 
-    setNewResponse: (state, actions: PayloadAction<ResponseState>) => {
-      return actions.payload;
+    setNewResponse: (state, actions: PayloadAction<object>) => {
+      Object.entries(actions.payload).forEach(([key, value]) => {
+        if (state[key]) {
+          state[key] = value;
+        }
+      });
     },
   },
 });

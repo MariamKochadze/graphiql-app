@@ -8,6 +8,8 @@ export interface ResponseState {
   size: number;
   time: number;
   variables: Record<string, string>;
+  urlSdl: string;
+  clientType: 'rest' | 'graphql';
 }
 
 export interface RequestHistory extends ResponseState {

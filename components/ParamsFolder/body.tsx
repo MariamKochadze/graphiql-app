@@ -12,7 +12,7 @@ export default function Body() {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const t = useTranslations('RestClient');
-  const { body } = useAppSelector(state => state.response);
+  const { body, clientType } = useAppSelector(state => state.response);
   const { bodyType } = useAppSelector(state => state.params);
   const response = useAppSelector(state => state.response);
   const router = useRouter();
@@ -33,28 +33,38 @@ export default function Body() {
         borderTop: '1px solid var(--color-gray)',
       }}
     >
-      <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsBody')}</Typography>
-      <FormControl>
-        <RadioGroup row value={bodyType} onChange={e => dispatch(setBodyType(e.target.value as 'json' | 'text'))}>
-          <FormControlLabel value="json" control={<Radio />} label={t('json')} />
-          <FormControlLabel value="text" control={<Radio />} label={t('text')} />
-        </RadioGroup>
-      </FormControl>
-      {bodyType === 'text' && (
-        <textarea
-          value={(body as string) || ''}
-          style={{
-            width: 'calc(100% - 30px)',
-            padding: '10px',
-            height: '250px',
-            border: '1px solid var(--color-purple)',
-            outline: 'none',
-          }}
-          onChange={e => dispatch(setNewBody(e.target.value))}
-          onBlur={handleBlurBody}
-        ></textarea>
-      )}
-      {bodyType === 'json' && (
+      <Typography
+        sx={{ color: 'var(--color-purple)' }}
+      >{`${t('params')} ${clientType === 'graphql' ? t('query') : t('body')}`}</Typography>
+      {clientType === 'rest' ? (
+        <>
+          <FormControl>
+            <RadioGroup row value={bodyType} onChange={e => dispatch(setBodyType(e.target.value as 'json' | 'text'))}>
+              <FormControlLabel value="json" control={<Radio />} label={t('json')} />
+              <FormControlLabel value="text" control={<Radio />} label={t('text')} />
+            </RadioGroup>
+          </FormControl>
+          {bodyType === 'text' && (
+            <textarea
+              value={(body as string) || ''}
+              style={{
+                width: 'calc(100% - 30px)',
+                padding: '10px',
+                height: '250px',
+                border: '1px solid var(--color-purple)',
+                outline: 'none',
+              }}
+              onChange={e => dispatch(setNewBody(e.target.value))}
+              onBlur={handleBlurBody}
+            ></textarea>
+          )}
+          {bodyType === 'json' && (
+            <Box sx={{ height: '100%' }}>
+              <JsonTextarea changeBlur={handleBlurBody} />
+            </Box>
+          )}
+        </>
+      ) : (
         <Box sx={{ height: '100%' }}>
           <JsonTextarea changeBlur={handleBlurBody} />
         </Box>
