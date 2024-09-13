@@ -9,7 +9,11 @@ export default function NotFoundPage() {
       <ul>
         <li>Double-check the URL for typos.</li>
         <li>
-          Head back to our <Link href="/">homepage </Link> for more adventures.
+          Head back to our
+          <Link className="text-secondary-blue" href="/">
+            homepage
+          </Link>
+          for more adventures.
         </li>
       </ul>
     </div>
