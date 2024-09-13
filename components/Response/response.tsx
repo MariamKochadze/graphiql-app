@@ -1,75 +1,55 @@
 'use client';
 
-import { ResponseState } from '@app/common/interface/interface';
 import { Box, Grid, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { setNewResponse } from '../../store/features/response/responseSlice';
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { selectUser } from '@store/selectors';
-import { Controlled as JsonTextarea } from 'react-codemirror2';
 import { httpStatusDescriptions, httpColors } from '@app/common/constants';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/neat.css';
-import 'codemirror/mode/javascript/javascript';
-import { removeBodyVariables } from '@components/Base64Route/BodyVariables';
+import CodeMirror from '@uiw/react-codemirror';
+import { json } from '@codemirror/lang-json';
+import { jsonTheme } from '@app/common/constants';
 
 export default function Response({
-  status,
-  data,
-  error,
   headers,
   url,
   method,
   body,
-  submit,
+  clientType,
 }: {
-  status: string | null | number;
-  data: unknown | null;
-  error: string | null;
   headers: Record<string, string>;
   url: string;
   method: string;
   body: string | null | undefined;
-  submit: boolean;
+  clientType: 'rest' | 'graphql';
 }) {
   const user = useAppSelector(selectUser);
+  const response = useAppSelector(state => state.response);
   const t = useTranslations('RestClient');
   const dispatch = useAppDispatch();
-  const { bodyWithVariables, variables } = removeBodyVariables(body);
-  const response: ResponseState = {
-    status: parseInt(status as string) || 0,
+  const responseUpdate = {
     headers,
-    url: url || '',
+    url,
     method,
-    body: bodyWithVariables !== '{}' && bodyWithVariables ? bodyWithVariables : '',
-    response: '',
-    size: 0,
-    time: 0,
-    variables,
+    body: body || '',
+    clientType,
   };
+  dispatch(
+    setNewResponse({
+      headers: headers,
+    })
+  );
 
-  const options = {
-    mode: { name: 'javascript', json: true },
-    theme: 'neat',
-    lineNumbers: true,
-    tabSize: 2,
-    indentWithTabs: true,
-    autoCloseBrackets: true,
-    matchBrackets: true,
-    lineWrapping: true,
-    readOnly: true,
-    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-  };
   const colorStatus: string = httpColors[response.status.toString()[0]];
 
   useEffect(() => {
-    dispatch(setNewResponse(response));
-  }, [dispatch, response]);
+    dispatch(setNewResponse(responseUpdate));
+  }, [response.response]);
 
   return (
     user &&
-    submit && (
+    response.response && (
       <Box
         sx={{
           borderTop: '1px solid var(--color-gray)',
@@ -102,31 +82,20 @@ export default function Response({
 
         <Box
           sx={{
-            height: 300,
-            overflowY: 'hidden',
+            maxHeight: 500,
+            overflowY: 'scroll',
             display: 'flex',
             flexDirection: 'column',
             gap: 1,
             border: '1px solid var(--color-gray)',
           }}
         >
-          {error !== null ? (
-            <JsonTextarea
-              value={JSON.stringify(error, null, 2)}
-              options={options}
-              onBeforeChange={(editor, data, value) => {
-                editor.setValue(JSON.stringify(value, null, 2));
-              }}
-            />
-          ) : (
-            <JsonTextarea
-              value={JSON.stringify(data, null, 2)}
-              options={options}
-              onBeforeChange={(editor, data, value) => {
-                editor.setValue(JSON.stringify(value, null, 2));
-              }}
-            />
-          )}
+          <CodeMirror
+            readOnly
+            theme={jsonTheme}
+            value={JSON.stringify(response.response, null, 2)}
+            extensions={[json()]}
+          />
         </Box>
       </Box>
     )

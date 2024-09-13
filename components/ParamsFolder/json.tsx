@@ -1,9 +1,9 @@
 import React from 'react';
 import CodeMirror from '@uiw/react-codemirror';
-import { javascript } from '@codemirror/lang-javascript';
+import { json } from '@codemirror/lang-json';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { setNewBody } from '@store/features/response/responseSlice';
-import { githubLight } from '@uiw/codemirror-theme-github';
+import { jsonTheme } from '@app/common/constants';
 import { Typography } from '@mui/material';
 
 function JsonTextarea({ changeBlur }: { changeBlur: (e) => void }) {
@@ -12,6 +12,7 @@ function JsonTextarea({ changeBlur }: { changeBlur: (e) => void }) {
   const dispatch = useAppDispatch();
   const [value, setValue] = React.useState(body);
   const onChange = React.useCallback(val => {
+    // add your own validation if clientType === qraphql
     setValue(val);
     dispatch(setNewBody(val));
     try {
@@ -30,8 +31,8 @@ function JsonTextarea({ changeBlur }: { changeBlur: (e) => void }) {
       <CodeMirror
         value={value as string}
         height="140px"
-        theme={githubLight}
-        extensions={[javascript({ jsx: true })]}
+        theme={jsonTheme}
+        extensions={[json()]}
         onChange={onChange}
         onBlur={changeBlur}
       />

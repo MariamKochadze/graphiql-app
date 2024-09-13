@@ -1,3 +1,6 @@
+import { githubLightInit } from '@uiw/codemirror-theme-github';
+import { tags as t } from '@lezer/highlight';
+
 export const METHODS = {
   GET: 'GET',
   POST: 'POST',
@@ -8,6 +11,10 @@ export const METHODS = {
   HEAD: 'HEAD',
   TRACE: 'TRACE',
   CONNECT: 'CONNECT',
+};
+
+export const METHODS_GRAPHQL = {
+  GRAPHQL: 'GRAPHQL',
 };
 
 export const HEADERS = [
@@ -67,3 +74,24 @@ export const methodColors = {
   TRACE: '#6c757d',
   CONNECT: '#343a40',
 };
+
+export const jsonTheme = githubLightInit({
+  settings: {
+    caret: '#c0c0c0',
+    fontFamily: 'monospace',
+    lineHighlight: '#fafafa',
+    background: '#ffffff',
+    gutterBackground: '#fdfdfd',
+    gutterBorder: '1px solid #e0e0e0',
+  },
+  styles: [
+    { tag: t.keyword, color: '#e53935' },
+    { tag: t.string, color: '#43a047' },
+    { tag: t.number, color: '#1e88e5' },
+    { tag: t.punctuation, color: '#757575' },
+    { tag: t.comment, color: '#bdbdbd' },
+    { tag: t.logicOperator, color: '#8e24aa' },
+    { tag: t.link, color: '#1e88e5' },
+    { tag: t.bool, color: '#757575' },
+  ],
+});

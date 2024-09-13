@@ -15,23 +15,18 @@ import { useAppSelector, useAppDispatch } from '../../hooks/useStoreHooks';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { falsyValues } from '@app/common/constants';
-import { base64Route } from '@components/Base64Route/Base64Route';
-import { useRouter, usePathname } from 'next/navigation';
 import { setShowVariables } from '@store/features/response/paramSlice';
+import { setNewResponse } from '@store/features/response/responseSlice';
 
 export default function Variables() {
   const [editInput, setEditInput] = useState({ key: '', edit: false });
   const [error, setError] = useState('');
   const dispatch = useAppDispatch();
-  const router = useRouter();
-  const pathname = usePathname();
   const { showVariables } = useAppSelector(state => state.params);
   const t = useTranslations('RestClient');
   const { variables } = useAppSelector(state => state.response);
   const [inputKey, setInputKey] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
-  const response = useAppSelector(state => state.response);
-
   function setVariables(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -55,15 +50,18 @@ export default function Variables() {
       }
       if (!variableNew[key]) {
         variableNew[key] = value;
-        const responseNew = { ...response };
-        responseNew.variables = variableNew;
-        const route = base64Route(responseNew);
-        const lang = pathname.split('/')[1];
-        router.push(`/${lang}${route}`);
+        dispatch(
+          setNewResponse({
+            variables: variableNew,
+          })
+        );
         setError('');
       } else {
         setError(`${key} ${t('variableExist')}`);
       }
+
+      setInputKey('');
+      setInputValue('');
     }
   }
 
@@ -76,11 +74,11 @@ export default function Variables() {
   function handleDeleteVariable(key: string) {
     const variableNew = { ...variables };
     delete variableNew[key];
-    const responseNew = { ...response };
-    responseNew.variables = variableNew;
-    const route = base64Route(responseNew);
-    const lang = pathname.split('/')[1];
-    router.push(`/${lang}${route}`);
+    dispatch(
+      setNewResponse({
+        variables: variableNew,
+      })
+    );
   }
 
   return (
@@ -124,6 +122,7 @@ export default function Variables() {
       </form>
       <div className="flex row mx-2 items-center">
         <Switch
+          data-testid="showVariables"
           id="showVariables"
           checked={showVariables}
           onChange={e => dispatch(setShowVariables(e.target.checked))}
@@ -152,6 +151,7 @@ export default function Variables() {
                           className="focus:outline-none hover:outline-none w-full h-full hover:border-t-light-blue hover:rounded-md"
                           type="text"
                           value={key}
+                          name={key}
                           readOnly
                         />
                       </TableCell>
@@ -160,6 +160,7 @@ export default function Variables() {
                           className="focus:outline-none hover:outline-none w-full h-full hover:border-t-light-blue hover:rounded-md"
                           type="text"
                           value={variables[key]}
+                          name={variables[key]}
                           readOnly
                         />
                       </TableCell>

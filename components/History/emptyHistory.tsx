@@ -12,7 +12,7 @@ export default function EmptyHistory() {
         <Link href="GET">
           <Button variant="contained">{t('rest-client')}</Button>
         </Link>
-        <Link href="graphiqlClient">
+        <Link href="GRAPHQL">
           <Button variant="outlined">{t('graphiql-client')}</Button>
         </Link>
       </div>

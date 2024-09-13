@@ -1,35 +1,22 @@
 import { ResponseState } from '@app/common/interface/interface';
-import { addBodyVariables } from './BodyVariables';
 
-export function base64Route(data: ResponseState, submit: boolean = false): string {
-  const { url, body, method, headers, variables } = data;
+export function base64Route(data: ResponseState): string {
+  // make route /{method}/{url}/{body}/?{headers}
+  // if body exist but no url /{method}/{default}/{body}/?{headers}
+  const { url, body, method, headers, clientType } = data;
 
-  let routeUrl = `/${method}`;
+  let routeUrl = `/${clientType === 'graphql' ? 'GRAPHQL' : method}`;
 
   if (url) {
-    const urlObj = {
-      url: url,
-      submit: submit,
-    };
-    const encodedUrl = encodeURIComponent(btoa(JSON.stringify(urlObj)));
+    const encodedUrl = encodeURIComponent(btoa(url));
     routeUrl += `/${encodedUrl}`;
-  } else if (!url && (body || Object.keys(variables).length > 0)) {
-    const urlObj = {
-      url: '',
-      submit: submit,
-    };
-    const encodedUrl = encodeURIComponent(btoa(JSON.stringify(urlObj)));
+  } else if (!url && body) {
+    const encodedUrl = encodeURIComponent(btoa('default'));
     routeUrl += `/${encodedUrl}`;
   }
 
   if (body) {
-    const bodyWithoutVariables = addBodyVariables(body, variables);
-    const encodedBody = body ? encodeURIComponent(btoa(JSON.stringify(bodyWithoutVariables))) : '';
-    routeUrl += `/${encodedBody}`;
-  }
-  if (Object.keys(variables).length > 0 && !body) {
-    const bodyWithoutVariables = addBodyVariables('{}', variables);
-    const encodedBody = encodeURIComponent(btoa(JSON.stringify(bodyWithoutVariables)));
+    const encodedBody = body ? encodeURIComponent(btoa(JSON.stringify(body))) : '';
     routeUrl += `/${encodedBody}`;
   }
 
@@ -40,8 +27,9 @@ export function base64Route(data: ResponseState, submit: boolean = false): strin
   return routeUrl;
 }
 export function decodeBase64({ params }: { params: { method: string; base64?: string; body?: string } }) {
+  // decoded url and body
   const { base64, body } = params;
-  const { url, submit }: { url: string; submit: boolean } = base64 ? JSON.parse(atob(decodeURIComponent(base64))) : {};
+  const url = base64 ? atob(decodeURIComponent(base64)) : '';
   const decodedBody = body ? JSON.parse(atob(decodeURIComponent(body))) : undefined;
-  return { url: url || '', body: decodedBody, submit: submit || false };
+  return { url: url === 'default' ? '' : url, body: decodedBody };
 }

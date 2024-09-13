@@ -1,4 +1,4 @@
-import RestFullClient from '@components/RestFull-client/restFullPage';
+import RestFullAndGraph from '@components/RestFull-client/RestFullAndGraph';
 
 export default async function Page({
   params,
@@ -7,5 +7,5 @@ export default async function Page({
   params: { method: string; base64: string; body?: string };
   searchParams: Record<string, string>;
 }) {
-  return <RestFullClient params={params} searchParams={searchParams} />;
+  return <RestFullAndGraph params={params} searchParams={searchParams} />;
 }
