@@ -1,15 +1,14 @@
 'use client';
 
+import { httpColors, httpStatusDescriptions, jsonTheme } from '@app/common/constants';
+import { json } from '@codemirror/lang-json';
 import { Box, Grid, Typography } from '@mui/material';
+import { selectUser } from '@store/selectors';
+import CodeMirror from '@uiw/react-codemirror';
+import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { setNewResponse } from '../../store/features/response/responseSlice';
-import { useEffect } from 'react';
-import { useTranslations } from 'next-intl';
-import { selectUser } from '@store/selectors';
-import { httpStatusDescriptions, httpColors } from '@app/common/constants';
-import CodeMirror from '@uiw/react-codemirror';
-import { json } from '@codemirror/lang-json';
-import { jsonTheme } from '@app/common/constants';
 
 export default function Response({
   headers,
