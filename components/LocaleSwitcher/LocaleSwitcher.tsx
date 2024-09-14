@@ -13,7 +13,6 @@ export default function LocaleSwitcher({ isSticky }: LocaleSwitcherProps) {
   const localActive = useLocale();
   const t = useTranslations('HomePage');
   const pathname = usePathname();
-  // const isActive = path => path === pathname;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -28,6 +27,7 @@ export default function LocaleSwitcher({ isSticky }: LocaleSwitcherProps) {
     <div className={isSticky ? 'border !border-light-blue rounded-full ' : 'border border-regal-blue rounded-full'}>
       <Button
         id="basic-button"
+        data-testid="locale-switcher"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
@@ -52,12 +52,12 @@ export default function LocaleSwitcher({ isSticky }: LocaleSwitcherProps) {
         }}
       >
         <MenuItem onClick={handleClose}>
-          <Link href={pathname} locale="en">
+          <Link href={pathname} locale="en" data-testid="locale-switcher-en">
             {t('english-value')}
           </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link href={pathname} locale="ru">
+          <Link href={pathname} locale="ru" data-testid="locale-switcher-ru">
             {t('russian-value')}
           </Link>
         </MenuItem>

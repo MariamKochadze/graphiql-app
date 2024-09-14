@@ -13,7 +13,19 @@ export default defineConfig({
     setupFiles: './testSetup/setupTests.ts',
     coverage: {
       provider: 'v8',
-      exclude: ['**/.eslintrc.cjs', 'vitest.config.ts', 'next.config.js', '.next', 'dist', '**/*.test.{js,jsx,ts,tsx}'],
+      exclude: [
+        '**/.eslintrc.cjs',
+        'vitest.config.ts',
+        'next.config.js',
+        '.next',
+        'dist',
+        '**/*.test.{js,jsx,ts,tsx}',
+        '**/node_modules/**',
+        '**/testSetup/**',
+        '**/postcss.config.js',
+        '**/tailwind.config.cjs',
+        '**/tailwind.config.js',
+      ],
     },
     alias: {
       '@components': join(__dirname, 'components'),
@@ -24,6 +36,7 @@ export default defineConfig({
       '@hooks': join(__dirname, 'hooks'),
       '@store': join(__dirname, 'store'),
       '@utils': join(__dirname, 'utils'),
+      '@messages': join(__dirname, 'messages'),
     },
   },
   resolve: {

@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import { SimpleUser } from '@store/userSlice';
-import { useRouter } from 'navigation';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 interface UserProps {

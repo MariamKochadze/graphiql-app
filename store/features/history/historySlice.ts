@@ -2,9 +2,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResponseState } from '@app/common/interface/interface';
 
-const initialState: { [key: string]: ResponseState[] } = localStorage.getItem('historyApiDog')
-  ? JSON.parse(localStorage.getItem('historyApiDog') as string)
-  : {};
+const initialState: { [key: string]: ResponseState[] } = {};
 
 const historySlice = createSlice({
   name: 'response',
@@ -18,8 +16,12 @@ const historySlice = createSlice({
       state[email] = state[email] ? [...state[email], history] : [history];
       localStorage.setItem('historyApiDog', JSON.stringify(state));
     },
+    setAllHistory: (_, actions: PayloadAction<{ [key: string]: ResponseState[] }>) => {
+      localStorage.setItem('historyApiDog', JSON.stringify(actions.payload));
+      return actions.payload;
+    },
   },
 });
 
-export const { setNewHistory } = historySlice.actions;
+export const { setNewHistory, setAllHistory } = historySlice.actions;
 export const historyReducer = historySlice.reducer;

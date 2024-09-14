@@ -1,13 +1,13 @@
 import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { useAppSelector, useAppDispatch } from '@hooks/useStoreHooks';
-import { selectUser } from '@store/selectors';
 import { base64Route } from '@components/Base64Route/Base64Route';
 import { usePathname } from 'next/navigation';
 import { methodColors } from '@app/common/constants';
 import { useRouter } from 'next/navigation';
 import { ResponseState } from '@app/common/interface/interface';
 import { setNewResponse } from '@store/features/response/responseSlice';
+import { selectUser } from '@store/selectors';
 
 export default function AllHistory() {
   const router = useRouter();
