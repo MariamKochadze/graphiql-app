@@ -17,6 +17,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'Rest/graphql client app',
   description: 'RS School React Task',
+  icons: {
+    icon: '/assets/favicon.ico',
+  },
 };
 
 interface RootLayoutProps {
