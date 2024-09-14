@@ -3,9 +3,16 @@ export interface ResponseState {
   method: string;
   headers: Record<string, string>;
   body: string | unknown;
-  response: string;
+  response: unknown;
   status: number;
   size: number;
   time: number;
-  query: Record<string, string>;
+  variables: Record<string, string>;
+  urlSdl: string;
+  clientType: 'rest' | 'graphql';
+}
+export interface ParamsState {
+  openPage: 'Headers' | 'Body' | 'Variables';
+  showVariables: boolean;
+  bodyType: 'json' | 'text';
 }

@@ -51,8 +51,30 @@
     "body": "Body",
     "paramsHeaders": "Params Headers",
     "paramsBody": "Params Body",
-    "paramsQuery": "Params Query",
+    "params": "Params",
+    "paramsVariables": "Params Variables",
     "clear": "Clear",
-    "addQuery": "Add Query"
+    "none": "None",
+    "json": "JSON",
+    "text": "Text",
+    "variables": "Variables",
+    "variable": "Variable",
+    "showVariables": "Show Variables",
+    "edit": "Edit",
+    "keyExist": "Key already exists",
+    "variableExist": "Variable already exists",
+    "query": "Query"
+  },
+  "LoaderPage": {
+    "cancel": "Cancel"
+  },
+  "History": {
+    "noHistory": "You haven't executed any requests\nIt's empty here. Try:",
+    "rest-client": "REST Client",
+    "graphiql-client": "GraphiQL Client",
+    "historyRequest": "History Requests",
+    "method": "Method",
+    "url": "URL",
+    "date": "Date"
   }
 }

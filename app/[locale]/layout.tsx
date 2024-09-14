@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Poppins } from 'next/font/google';
 import { Metadata } from 'next/types';
+import { ToastContainer } from 'react-toastify';
 import StoreProvider from '../StoreProvider';
 import '../styles/global.css';
 
@@ -38,6 +39,7 @@ export default async function RootLayout({ children, params: { locale } }: Reado
             <Footer />
           </StoreProvider>
         </NextIntlClientProvider>
+        <ToastContainer />
       </body>
     </html>
   );

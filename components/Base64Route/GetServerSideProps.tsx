@@ -1,19 +1,23 @@
-import { decodeBase64 } from './Base64Route';
+'use server';
 
-export async function getServerSideProps({
-  params,
-  searchParams,
-}: {
-  params: { method: string; base64: string; body?: string };
-  searchParams: Record<string, string>;
-}) {
-  const { url, body } = decodeBase64({ params });
+import { ResponseState } from '@app/common/interface/interface';
+import { addBodyVariables } from '@components/Base64Route/BodyVariables';
+
+export async function getServerSideProps(response: ResponseState) {
+  const { url, body, method, headers, clientType, variables } = response;
+  const qraphiqlBody = {
+    query: body,
+    variables,
+  };
+  // you can make two function for restfull and qraphql
+  // TODO: change code For SDL response
+  const restFullBody = addBodyVariables(body, variables);
   try {
     const response = await fetch(url, {
-      method: params.method,
-      body: body ? body : undefined,
+      method: clientType === 'graphql' ? 'POST' : method,
+      body: body ? (clientType === 'graphql' ? JSON.stringify(qraphiqlBody) : restFullBody) : undefined,
       headers: {
-        ...searchParams,
+        ...headers,
       },
     });
     try {
@@ -22,6 +26,7 @@ export async function getServerSideProps({
       if (!response.ok) {
         return { props: { data: null, status, error: data } };
       }
+      // here can be Added response for documentation
       return { props: { data, status, error: null } };
     } catch (error) {
       return { props: { data: null, status: response.status, error: response.statusText || 'Error' } };

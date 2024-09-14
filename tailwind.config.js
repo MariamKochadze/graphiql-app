@@ -16,6 +16,13 @@ export default {
       'light-blue': '#00aaff',
       'body-bg': '#fcfcff',
       'regal-white': '#ffffff',
+      'color-gray': '#eaecf0',
+      'color-red': '#ff4d4f',
+      'color-green': '#52c41a',
+      'color-yellow': '#faad14',
+      'color-purple': '#1976d2',
+      'color-blue': '#1890ff',
+      'light-bg-blue': '#1a66ff50',
     },
     borderColor: {
       'neutral-200': '#f4f7ff',

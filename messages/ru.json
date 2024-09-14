@@ -51,8 +51,30 @@
     "body": "Тело",
     "paramsHeaders": "Параметры заголовков",
     "paramsBody": "Параметры тела",
-    "paramsQuery": "Параметры запроса",
+    "paramsVariables": "Параметры переменных",
     "clear": "Очистить",
-    "addQuery": "Добавить параметр запроса"
+    "none": "без тела",
+    "json": "JSON",
+    "params": "Параметры",
+    "text": "Текст",
+    "variables": "Переменные",
+    "variable": "Переменная",
+    "showVariables": "Показать переменные",
+    "edit": "Изменить",
+    "keyExists": "Ключ уже существует",
+    "variableExist": "Переменная уже существует",
+    "query": "Запрос"
+  },
+  "LoaderPage": {
+    "cancel": "Отменить"
+  },
+  "History": {
+    "noHistory": "Вы еще не выполнили ни одного запроса.\nЗдесь пусто. Попробуйте эти варианты:",
+    "rest-client": "Запрос REST",
+    "graphiql-client": "Запрос GraphQL",
+    "historyRequest": "История запросов",
+    "method": "Метод",
+    "url": "URL-адрес",
+    "date": "Дата"
   }
 }

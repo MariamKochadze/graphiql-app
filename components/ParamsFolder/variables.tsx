@@ -1,8 +1,8 @@
 'use client';
-import { HEADERS } from '@app/common/constants';
 import {
   Box,
   Button,
+  Switch,
   Table,
   TableBody,
   TableCell,
@@ -11,64 +11,74 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useAppSelector } from '../../hooks/useStoreHooks';
+import { useAppSelector, useAppDispatch } from '../../hooks/useStoreHooks';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import { base64Route } from '@components/Base64Route/Base64Route';
-import { usePathname } from 'next/navigation';
+import { falsyValues } from '@app/common/constants';
+import { setShowVariables } from '@store/features/response/paramSlice';
+import { setNewResponse } from '@store/features/response/responseSlice';
 
-export default function Headers() {
+export default function Variables() {
   const [editInput, setEditInput] = useState({ key: '', edit: false });
   const [error, setError] = useState('');
-  const pathname = usePathname();
-  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { showVariables } = useAppSelector(state => state.params);
   const t = useTranslations('RestClient');
-  const { headers } = useAppSelector(state => state.response);
-  const response = useAppSelector(state => state.response);
+  const { variables } = useAppSelector(state => state.response);
   const [inputKey, setInputKey] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
-
-  function setHeaders(e: React.FormEvent<HTMLFormElement>) {
+  function setVariables(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (inputKey && inputValue) {
-      const key = inputKey;
-      const value = inputValue;
-      const headerNew = { ...headers };
+      let key: string = inputKey;
+      let value: string = inputValue;
+      if (!parseFloat(value) && (!value.startsWith('"') || !value.endsWith('"')) && !falsyValues.includes(value)) {
+        if (!value.startsWith('"')) {
+          value = `"${value}`;
+        }
+        if (!value.endsWith('"')) {
+          value = `${value}"`;
+        }
+      }
+
+      key = key.replace(new RegExp(' ', 'g'), '_');
+      const variableNew = { ...variables };
       if (editInput.edit) {
-        delete headerNew[editInput.key];
+        delete variableNew[editInput.key];
         setEditInput({ key: '', edit: false });
       }
-      if (!headerNew[key]) {
-        headerNew[key] = value;
-        setInputKey('');
-        setInputValue('');
-        const responseNew = { ...response };
-        responseNew.headers = headerNew;
-        const route = base64Route(responseNew);
-        const lang = pathname.split('/')[1];
-        router.push(`/${lang}${route}`);
+      if (!variableNew[key]) {
+        variableNew[key] = value;
+        dispatch(
+          setNewResponse({
+            variables: variableNew,
+          })
+        );
         setError('');
       } else {
-        setError(`${key} ${t('keyExist')}`);
+        setError(`${key} ${t('variableExist')}`);
       }
+
+      setInputKey('');
+      setInputValue('');
     }
   }
-  function handleEditHeaders(key: string) {
+
+  function handleEditVariable(key: string) {
     setInputKey(key);
-    setInputValue(headers[key]);
+    setInputValue(variables[key]);
     setEditInput({ key, edit: true });
   }
 
-  function handleDeleteHeader(key: string) {
-    const headerNew = { ...headers };
-    delete headerNew[key];
-    const responseNew = { ...response };
-    responseNew.headers = headerNew;
-    const route = base64Route(responseNew);
-    const lang = pathname.split('/')[1];
-    router.push(`/${lang}${route}`);
+  function handleDeleteVariable(key: string) {
+    const variableNew = { ...variables };
+    delete variableNew[key];
+    dispatch(
+      setNewResponse({
+        variables: variableNew,
+      })
+    );
   }
 
   return (
@@ -82,22 +92,17 @@ export default function Headers() {
         borderTop: '1px solid var(--color-gray)',
       }}
     >
-      <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsHeaders')}</Typography>
-      <form onSubmit={setHeaders} className="flex flex-row w-full relative pb-10">
+      <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsVariables')}</Typography>
+      <form onSubmit={setVariables} className="flex flex-row w-full relative pb-5">
         <input
           type="text"
           list="headers"
-          placeholder={t('key')}
+          placeholder={t('variable')}
           value={inputKey}
           onChange={e => setInputKey(e.target.value)}
           required
           className="outline-none w-full h-10 border border-gray-400 px-5 transition duration-300 bg-gray-400 focus:border-purple-500 focus:bg-white hover:border-purple-500"
         />
-        <datalist id="headers">
-          {HEADERS.map(header => (
-            <option key={header} value={header} />
-          ))}
-        </datalist>
         <input
           type="text"
           placeholder={t('value')}
@@ -113,9 +118,18 @@ export default function Headers() {
         >
           {editInput.edit ? t('edit') : t('addHeader')}
         </Button>
-        <p className="w-full text-color-red size-4 text-center absolute bottom-5">{error ? error : ''}</p>
+        <p className="w-full text-color-red size-4 text-center absolute bottom-0">{error ? error : ''}</p>
       </form>
-      {Object.keys(headers).length !== 0 && (
+      <div className="flex row mx-2 items-center">
+        <Switch
+          data-testid="showVariables"
+          id="showVariables"
+          checked={showVariables}
+          onChange={e => dispatch(setShowVariables(e.target.checked))}
+        />
+        <label htmlFor="showVariables">{t('showVariables')}</label>
+      </div>
+      {Object.keys(variables).length !== 0 && showVariables && (
         <div>
           <TableContainer
             sx={{ borderRadius: '10px', border: '1px solid var(--color-purple)', width: 'calc(100% - 2px)' }}
@@ -123,13 +137,13 @@ export default function Headers() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>{t('key')}</TableCell>
+                  <TableCell>{t('variable')}</TableCell>
                   <TableCell>{t('value')}</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Object.keys(headers)
+                {Object.keys(variables)
                   .map(key => (
                     <TableRow key={key} sx={{ color: 'var(--color-purple)' }}>
                       <TableCell sx={{ color: 'var(--color-purple)' }}>
@@ -137,6 +151,7 @@ export default function Headers() {
                           className="focus:outline-none hover:outline-none w-full h-full hover:border-t-light-blue hover:rounded-md"
                           type="text"
                           value={key}
+                          name={key}
                           readOnly
                         />
                       </TableCell>
@@ -144,18 +159,19 @@ export default function Headers() {
                         <input
                           className="focus:outline-none hover:outline-none w-full h-full hover:border-t-light-blue hover:rounded-md"
                           type="text"
-                          value={headers[key]}
+                          value={variables[key]}
+                          name={variables[key]}
                           readOnly
                         />
                       </TableCell>
                       <TableCell>
-                        <Button sx={{ color: 'var(--color-purple)' }} onClick={() => handleDeleteHeader(key)}>
+                        <Button sx={{ color: 'var(--color-purple)' }} onClick={() => handleDeleteVariable(key)}>
                           {t('clear')}
                         </Button>
                         <Button
                           variant="outlined"
                           sx={{ color: 'var(--color-purple)' }}
-                          onClick={() => handleEditHeaders(key)}
+                          onClick={() => handleEditVariable(key)}
                         >
                           {t('edit')}
                         </Button>

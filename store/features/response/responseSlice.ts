@@ -5,12 +5,14 @@ const initialState: ResponseState = {
   url: '',
   method: 'GET',
   headers: {},
-  query: {},
+  variables: {},
   body: '',
   response: '',
   status: 0,
   size: 0,
   time: 0,
+  urlSdl: '',
+  clientType: 'rest',
 };
 
 const responseSlice = createSlice({
@@ -20,41 +22,18 @@ const responseSlice = createSlice({
     setNewUrl: (state, actions: PayloadAction<string>) => {
       state.url = actions.payload;
     },
-    setNewMethod: (state, actions: PayloadAction<string>) => {
-      state.method = actions.payload;
-    },
-    setNewHeaders: (state, actions: PayloadAction<Record<string, string>>) => {
-      state.headers[actions.payload.key] = actions.payload.value;
-    },
-    deleteNewHeaders: (state, actions: PayloadAction<string>) => {
-      delete state.headers[actions.payload];
-    },
-
-    setNewQuery: (state, actions: PayloadAction<Record<string, string>>) => {
-      state.query[actions.payload.key] = actions.payload.value;
-    },
-    deleteQuery: (state, actions: PayloadAction<string>) => {
-      delete state.query[actions.payload];
-    },
 
     setNewBody: (state, actions: PayloadAction<string>) => {
       state.body = actions.payload;
     },
 
-    setNewResponse: (state, actions: PayloadAction<ResponseState>) => {
-      return actions.payload;
+    setNewResponse: (state, actions: PayloadAction<object>) => {
+      Object.entries(actions.payload).forEach(([key, value]) => {
+        state[key] = value;
+      });
     },
   },
 });
 
-export const {
-  setNewUrl,
-  setNewHeaders,
-  deleteNewHeaders,
-  setNewQuery,
-  deleteQuery,
-  setNewMethod,
-  setNewBody,
-  setNewResponse,
-} = responseSlice.actions;
+export const { setNewUrl, setNewBody, setNewResponse } = responseSlice.actions;
 export const responseReducer = responseSlice.reducer;
