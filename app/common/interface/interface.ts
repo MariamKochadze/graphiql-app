@@ -2,7 +2,7 @@ export interface ResponseState {
   url: string;
   method: string;
   headers: Record<string, string>;
-  body: string | unknown;
+  body: string;
   response: unknown;
   status: number;
   size: number;

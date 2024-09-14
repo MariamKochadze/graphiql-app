@@ -1,5 +1,5 @@
-import { githubLightInit } from '@uiw/codemirror-theme-github';
 import { tags as t } from '@lezer/highlight';
+import { githubLightInit } from '@uiw/codemirror-theme-github';
 
 export const METHODS = {
   GET: 'GET',

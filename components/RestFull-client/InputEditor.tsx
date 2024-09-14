@@ -105,11 +105,9 @@ export default function InputEditor() {
             className="bg-color-gray border-color-gray outline-none px-1 w-full h-full rounded-r-2xl transition duration-300 hover:border-light-blue border-2 focus:bg-white focus:border-light-blue focus:shadow-md focus:shadow-blue-500 focus:bg-body-bg"
           />
         </div>
-        {clientType === 'rest' && (
-          <Button type="submit" variant="contained" className="px-1.5 lg:px-10 rounded-lg">
-            {t('send')}
-          </Button>
-        )}
+        <Button type="submit" variant="contained" className="px-1.5 lg:px-10 rounded-lg">
+          {t('send')}
+        </Button>
       </form>
       {clientType === 'graphql' && <SDLInput onChange={handleChangeSdl} value={urlSdl} />}
     </Box>

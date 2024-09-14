@@ -1,14 +1,17 @@
-import React from 'react';
-import CodeMirror from '@uiw/react-codemirror';
-import { json } from '@codemirror/lang-json';
-import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
-import { setNewBody } from '@store/features/response/responseSlice';
 import { jsonTheme } from '@app/common/constants';
+import { Document } from '@components/icons/Document';
+import { Prettier } from '@components/icons/Prettier';
 import { Typography } from '@mui/material';
+import { setNewBody } from '@store/features/response/responseSlice';
+import { langs } from '@uiw/codemirror-extensions-langs';
+import CodeMirror from '@uiw/react-codemirror';
+import { convertToPrettier } from '@utils/prettier/prettier';
+import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 
 function JsonTextarea({ changeBlur }: { changeBlur: (e) => void }) {
   const [error, setError] = React.useState<string | null>(null);
-  const { body, variables } = useAppSelector(state => state.response);
+  const { body, variables, clientType } = useAppSelector(state => state.response);
   const dispatch = useAppDispatch();
   const [value, setValue] = React.useState(body);
   const onChange = React.useCallback(val => {
@@ -26,13 +29,29 @@ function JsonTextarea({ changeBlur }: { changeBlur: (e) => void }) {
       setError(error.message);
     }
   }, []);
+
+  const onPrettierClickHandler = () => {
+    setValue(prevValue => convertToPrettier(prevValue));
+  };
+
   return (
     <>
+      {clientType === 'graphql' && (
+        <div className="flex flex-items gap-4 my-3">
+          <button>
+            <Document />
+          </button>
+          <button onClick={onPrettierClickHandler}>
+            <Prettier />
+          </button>
+        </div>
+      )}
+
       <CodeMirror
         value={value as string}
         height="140px"
         theme={jsonTheme}
-        extensions={[json()]}
+        extensions={[langs.json()]}
         onChange={onChange}
         onBlur={changeBlur}
       />
