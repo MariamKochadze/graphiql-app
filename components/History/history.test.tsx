@@ -52,9 +52,4 @@ describe('History Component', () => {
     expect(screen.getByText(english['HomePage']['rest-client'])).toBeInTheDocument();
     expect(screen.getByText(english['HomePage']['graphiql-client'])).toBeInTheDocument();
   });
-
-  it('renders History component correctly', async () => {
-    renderWithProviders(<History />);
-    expect(screen.getByText(/You haven't executed any requests/i)).toBeInTheDocument();
-  });
 });

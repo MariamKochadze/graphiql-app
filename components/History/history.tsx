@@ -6,10 +6,11 @@ import AllHistory from './allHistory';
 import EmptyHistory from './emptyHistory';
 import { setAllHistory } from '@store/features/history/historySlice';
 import { ResponseState } from '@app/common/interface/interface';
+import { selectUser } from '@store/selectors';
 
 export default function History() {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.user);
+  const user = useAppSelector(selectUser);
   const history = useAppSelector(state => state.history);
   const router = useRouter();
 
