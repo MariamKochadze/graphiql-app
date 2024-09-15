@@ -1,17 +1,12 @@
+import Page from './page';
 import { act, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import { describe, it } from 'vitest';
 import { renderWithProviders } from '../../utils/test-utils';
+import english from '../../messages/en.json';
 import { setUser } from '@store/userSlice';
 import '@testing-library/jest-dom';
-import { Header } from './Header.component';
-import english from '../../messages/en.json';
 import { NextIntlClientProvider } from 'next-intl';
-
-const messages = {
-  en: english,
-  ru: english,
-};
 
 vi.mock('next-intl', async importOriginal => {
   const actual = await importOriginal();
@@ -31,14 +26,18 @@ vi.mock('../../utils/firebase/firebase.utils', () => ({
       },
     }),
   createUserDocumentFromAuth: () => Promise.resolve(),
-  getCurrentUser: () => Promise.resolve({ uid: '123', displayName: 'John Doe', email: 'n9KJn@example.com' }),
 }));
 
-describe('Header Component', () => {
-  it('renders Header component correctly', async () => {
+const messages = {
+  en: english,
+  ru: english,
+};
+
+describe('Page Component', () => {
+  it('renders Page component correctly', async () => {
     const { store } = renderWithProviders(
       <NextIntlClientProvider messages={messages} locale={'en'}>
-        <Header />
+        <Page searchParams={{ page: 'home', query: 'query' }} />
       </NextIntlClientProvider>
     );
     await act(async () => {
@@ -46,6 +45,12 @@ describe('Header Component', () => {
     });
     const state = store.getState();
     expect(state.user.user).toEqual({ uid: '123', displayName: 'John Doe', email: 'n9KJn@example.com' });
-    expect(screen.getByRole('link')).toBeInTheDocument();
+    expect(screen.getByText(english['HomePage']['rest-client'])).toBeInTheDocument();
+    expect(screen.getByText(english['HomePage']['graphiql-client'])).toBeInTheDocument();
+    expect(screen.getByText(english['HomePage']['history'])).toBeInTheDocument();
+    expect(
+      screen.getByText(`${english['HomePage']['welcome-back']}, ${state.user.user?.displayName}!`)
+    ).toBeInTheDocument();
+    expect(screen.getByText(/John Doe/i)).toBeInTheDocument();
   });
 });

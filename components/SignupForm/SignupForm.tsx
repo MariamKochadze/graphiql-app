@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from 'utils/firebase/firebase.utils';
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
 import { ValidationError } from 'yup';
 import { validationSchema } from './validation';
 
@@ -100,6 +100,7 @@ const SignUpForm = () => {
           helperText={errors.displayName}
           fullWidth
           margin="normal"
+          data-testid="name"
         />
 
         <TextField
@@ -126,6 +127,7 @@ const SignUpForm = () => {
           helperText={errors.password}
           fullWidth
           margin="normal"
+          data-testid="password"
         />
 
         <TextField
@@ -139,6 +141,7 @@ const SignUpForm = () => {
           helperText={errors.confirmPassword}
           fullWidth
           margin="normal"
+          data-testid="confirm-password"
         />
 
         <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>

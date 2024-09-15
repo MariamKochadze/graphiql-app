@@ -24,6 +24,8 @@ const responseTest: ResponseState = {
   status: 0,
   size: 0,
   time: 0,
+  urlSdl: '',
+  clientType: 'rest',
 };
 
 const initialUser = {

@@ -36,7 +36,7 @@ const messages = {
   ru: english,
 };
 
-describe('LocaleSwitcher Component', () => {
+describe('LocaleSwitcher Component', async () => {
   it('renders LocaleSwitcher component correctly', async () => {
     render(
       <NextIntlClientProvider messages={messages} locale={'en'}>
@@ -48,6 +48,5 @@ describe('LocaleSwitcher Component', () => {
     await user.click(screen.getByTestId('locale-switcher'));
     expect(screen.getByTestId('locale-switcher-en')).toHaveTextContent('English');
     expect(screen.getByTestId('locale-switcher-ru')).toHaveTextContent('Russian');
-    await user.click(screen.getByTestId('locale-switcher-ru'));
   });
 });

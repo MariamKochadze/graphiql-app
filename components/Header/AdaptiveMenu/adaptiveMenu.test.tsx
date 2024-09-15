@@ -6,9 +6,13 @@ import '@testing-library/jest-dom';
 import AdaptiveMenu from './AdaptiveMenu';
 import userEvent from '@testing-library/user-event';
 
-vi.mock('next-intl', () => ({
-  useTranslations: (key: string) => (value: string) => english[key][value],
-}));
+vi.mock('next-intl', async importOriginal => {
+  const actual = await importOriginal();
+  return {
+    ...(actual as typeof import('next-intl')),
+    useTranslations: (key: string) => (value: string) => english[key][value],
+  };
+});
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({

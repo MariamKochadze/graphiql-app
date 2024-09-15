@@ -22,7 +22,6 @@ export default async function RestFullAndGraph({
         method={params.method}
         body={body}
         clientType={params.method === METHODS_GRAPHQL.GRAPHQL ? 'graphql' : 'rest'}
-        // there can be Sdl url
       />
     </>
   );

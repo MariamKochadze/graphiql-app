@@ -21,7 +21,6 @@ export default function InputEditor() {
   const router = useRouter();
   const pathname = usePathname();
   const user = useAppSelector(selectUser);
-  // clientType can be rest or graphql
 
   useEffect(() => {
     if (!user) {
@@ -57,7 +56,6 @@ export default function InputEditor() {
     const responseForHistory = { ...response };
     responseForHistory.response = '';
     responseForHistory.status = 0;
-    // save history and delete response and status code
     dispatch(setNewHistory({ email: user?.email || '', response: responseForHistory }));
     const {
       props: { data, status, error },
