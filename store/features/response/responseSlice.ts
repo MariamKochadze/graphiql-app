@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ResponseState } from '@app/common/interface/interface';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: ResponseState = {
   url: '',

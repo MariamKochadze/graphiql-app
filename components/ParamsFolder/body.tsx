@@ -1,13 +1,12 @@
 'use client';
+import { base64Route } from '@components/Base64Route/Base64Route';
 import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
+import { setBodyType } from '@store/features/response/paramSlice';
+import { useTranslations } from 'next-intl';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { setNewBody } from '../../store/features/response/responseSlice';
-import { useTranslations } from 'next-intl';
 import JsonTextarea from './json';
-import { setBodyType } from '@store/features/response/paramSlice';
-import { usePathname } from 'next/navigation';
-import { base64Route } from '@components/Base64Route/Base64Route';
-import { useRouter } from 'next/navigation';
 export default function Body() {
   const pathname = usePathname();
   const dispatch = useAppDispatch();

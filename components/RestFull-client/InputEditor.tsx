@@ -1,18 +1,16 @@
 'use client';
+import { getServerSideProps } from '@components/Base64Route/GetServerSideProps';
+import SDLInput from '@components/ParamsFolder/inputSDL';
 import { Box, Button, MenuItem, Select } from '@mui/material';
-import { useRouter } from 'next/navigation';
-import { METHODS } from '../../app/common/constants';
-import { useAppSelector, useAppDispatch } from '../../hooks/useStoreHooks';
-import { base64Route } from '../Base64Route/Base64Route';
-import { usePathname } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import { selectUser } from '@store/selectors';
-import { useEffect } from 'react';
 import { setNewHistory } from '@store/features/history/historySlice';
 import { setNewResponse, setNewUrl } from '@store/features/response/responseSlice';
-import { methodColors } from '../../app/common/constants';
-import SDLInput from '@components/ParamsFolder/inputSDL';
-import { getServerSideProps } from '@components/Base64Route/GetServerSideProps';
+import { selectUser } from '@store/selectors';
+import { useTranslations } from 'next-intl';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { methodColors, METHODS } from '../../app/common/constants';
+import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
+import { base64Route } from '../Base64Route/Base64Route';
 export default function InputEditor() {
   const dispatch = useAppDispatch();
   const t = useTranslations('RestClient');
@@ -21,6 +19,7 @@ export default function InputEditor() {
   const router = useRouter();
   const pathname = usePathname();
   const user = useAppSelector(selectUser);
+  // clientType can be rest or graphql
 
   useEffect(() => {
     if (!user) {
@@ -56,6 +55,7 @@ export default function InputEditor() {
     const responseForHistory = { ...response };
     responseForHistory.response = '';
     responseForHistory.status = 0;
+    // save history and delete response and status code
     dispatch(setNewHistory({ email: user?.email || '', response: responseForHistory }));
     const {
       props: { data, status, error },

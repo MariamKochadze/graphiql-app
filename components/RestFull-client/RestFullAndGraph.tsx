@@ -1,8 +1,8 @@
-import Response from '@components/Response/response';
-import Params from '@components/RestFull-client/params';
-import InputEditor from '@components/RestFull-client/InputEditor';
-import { decodeBase64 } from '@components/Base64Route/Base64Route';
 import { METHODS_GRAPHQL } from '@app/common/constants';
+import { decodeBase64 } from '@components/Base64Route/Base64Route';
+import Response from '@components/Response/response';
+import InputEditor from '@components/RestFull-client/InputEditor';
+import Params from '@components/RestFull-client/params';
 
 export default async function RestFullAndGraph({
   params,
@@ -15,14 +15,17 @@ export default async function RestFullAndGraph({
   return (
     <>
       <InputEditor />
-      <Params />
-      <Response
-        headers={searchParams}
-        url={url}
-        method={params.method}
-        body={body}
-        clientType={params.method === METHODS_GRAPHQL.GRAPHQL ? 'graphql' : 'rest'}
-      />
+      <div className={params.method === METHODS_GRAPHQL.GRAPHQL ? 'flex' : ''}>
+        <Params />
+        <Response
+          headers={searchParams}
+          url={url}
+          method={params.method}
+          body={body}
+          clientType={params.method === METHODS_GRAPHQL.GRAPHQL ? 'graphql' : 'rest'}
+          // there can be Sdl url
+        />
+      </div>
     </>
   );
 }
