@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import { SimpleUser } from '@store/userSlice';
-import { useRouter } from 'navigation';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -57,6 +57,7 @@ const AdaptiveMenu = ({ user, onSignOut, isSticky }: UserProps) => {
       </button>
       {isOpen && (
         <div
+          data-testid="adaptive-menu"
           onClick={() => setIsOpen(!isOpen)}
           className="lg:hidden fixed top-[78px] right-0 left-0 shadow-shadow-overlay h-[40vh] bg-regal-white pt-10 z-30"
         >

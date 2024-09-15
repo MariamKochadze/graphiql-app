@@ -1,13 +1,13 @@
 'use client';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { User } from 'firebase/auth';
-import { useAppDispatch } from 'hooks/useStoreHooks';
+import { useAppDispatch } from '@hooks/useStoreHooks';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { setUser, SimpleUser } from 'store/userSlice';
-import { signInAuthUserWithEmailAndPassword } from 'utils/firebase/firebase.utils';
+import { setUser, SimpleUser } from '@store/userSlice';
+import { signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils';
 import { ValidationError } from 'yup';
 import { signInValidationSchema } from './validation';
 
@@ -102,6 +102,7 @@ const SignInForm = () => {
           error={!!errors.password}
           helperText={errors.password}
           fullWidth
+          data-testid="password"
           margin="normal"
         />
         <Button variant="contained" type="submit" fullWidth sx={{ mt: 2 }}>

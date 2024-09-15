@@ -34,11 +34,6 @@ export default function Response({
     body: body || '',
     clientType,
   };
-  dispatch(
-    setNewResponse({
-      headers: headers,
-    })
-  );
 
   const colorStatus: string = httpColors[response.status.toString()[0]];
 
@@ -90,6 +85,7 @@ export default function Response({
           }}
         >
           <CodeMirror
+            className="min-h-full"
             readOnly
             theme={jsonTheme}
             value={JSON.stringify(response.response, null, 2)}

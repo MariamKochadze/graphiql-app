@@ -1,9 +1,9 @@
 import { jsonTheme } from '@app/common/constants';
-import { Document } from '@components/icons/Document';
 import { Prettier } from '@components/icons/Prettier';
 import { Typography } from '@mui/material';
 import { setNewBody } from '@store/features/response/responseSlice';
 import { langs } from '@uiw/codemirror-extensions-langs';
+import { materialLightInit } from '@uiw/codemirror-theme-material';
 import CodeMirror from '@uiw/react-codemirror';
 import { convertToPrettier } from '@utils/prettier/prettier';
 import React from 'react';
@@ -14,6 +14,7 @@ function JsonTextarea({ changeBlur }: { changeBlur: (e) => void }) {
   const { body, variables, clientType } = useAppSelector(state => state.response);
   const dispatch = useAppDispatch();
   const [value, setValue] = React.useState(body);
+
   const onChange = React.useCallback(val => {
     // add your own validation if clientType === qraphql
     setValue(val);
@@ -34,13 +35,19 @@ function JsonTextarea({ changeBlur }: { changeBlur: (e) => void }) {
     setValue(prevValue => convertToPrettier(prevValue));
   };
 
+  const options = {
+    settings: {
+      fontFamily: 'FiraCode',
+      lineHighlight: '#FAFAFA',
+      background: '#FAFAFA',
+      gutterBackground: '#FAFAFA',
+    },
+  };
+
   return (
     <>
       {clientType === 'graphql' && (
         <div className="flex flex-items gap-4 my-3">
-          <button>
-            <Document />
-          </button>
           <button onClick={onPrettierClickHandler}>
             <Prettier />
           </button>
@@ -50,7 +57,7 @@ function JsonTextarea({ changeBlur }: { changeBlur: (e) => void }) {
       <CodeMirror
         value={value as string}
         height="140px"
-        theme={jsonTheme}
+        theme={clientType === 'graphql' ? materialLightInit(options) : jsonTheme}
         extensions={[langs.json()]}
         onChange={onChange}
         onBlur={changeBlur}

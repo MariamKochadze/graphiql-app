@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStoreHooks';
 import { Link } from '../../navigation';
 import { selectUser } from '../../store/selectors/index';
-import AdaptiveMenu from './AdaptiveMenu/AdaptiveMenu';
+import AdaptiveMenu from '@components/Header/AdaptiveMenu/AdaptiveMenu';
 import NavMenu from './NavMenu/NavMenu';
 
 export const Header = () => {

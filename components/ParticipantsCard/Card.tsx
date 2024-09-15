@@ -1,4 +1,5 @@
-import Image, { StaticImageData } from 'next/image';
+import { StaticImageData } from 'next/image';
+import Image from 'next/legacy/image';
 import React from 'react';
 
 interface ParticipantsCardProps {
@@ -15,7 +16,7 @@ const ParticipantsCard: React.FC<ParticipantsCardProps> = ({ item }) => {
       <p className="">{item.detail}</p>
       <div className="flex mt-5 gap-3">
         <div className="max-w-20 max-h-20 rounded-full overflow-hidden">
-          <Image src={item.img} alt={item.name} layout="responsive" />
+          <Image src={item.img} alt={item.name} width={80} height={108} />
         </div>
         <div className="">
           <h2 className="">{item.name}</h2>
