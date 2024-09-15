@@ -1,0 +1,81 @@
+{
+  "HomePage": {
+    "title": "See why teams choose \n Apidog over Postman.",
+    "welcome": "Welcome",
+    "welcome-back": "Welcome Back",
+    "aboutProjectTitle": "About Project",
+    "aboutProject": "This project playground was created as part of the final task for the RS School GraphQL course. It utilizes GraphiQL, which offers a comprehensive and clear description of the data available in the API. This interface allows you to query exactly the data you need, ensuring efficiency and precision, while also enabling powerful developer tools to enhance your GraphQL experience.",
+    "aboutCourseTitle": "About Course",
+    "aboutCourse": "RS School offers a unique learning experience as a free, community-based online education initiative. The RS School has been run by the Rolling Scopes community since 2013. Today, over 600 developer-volunteers from various countries and companies assist as mentors. We believe in important ideas that guide our mission.RS School offers a comprehensive and hands-on course designed to equip participants with essential skills and knowledge in modern web development. This course covers a wide range of topics, including React, Redux,TypeScript, and advanced web development techniques.By the end of the course, participants will be proficient in modern web development practices, capable of building scalable and maintainable applications, and prepared to take on challenging roles in the tech industry.",
+    "ParticipantsTitle": "Participants",
+    "Participant1Description": "I'm Mariam Kochadze. A Junior Front-End Developer, based in Georgia. Here's a bit about me. I have experience working with HTML, CSS, SCSS, JavaScript, React, TypeScript, Material-UI (MUI), Redux, REST API, React Hook Forms, Yup Validator, Git. I have a lot of hobbies, walking, reading,capturing moments and creating visual stories,exploring new places and cultures which can provide new perspectives and experiences.",
+    "Participant1Position": "Software Engineer (Team Leader)",
+    "Participant2Description": "I'm Victoria Nykytenko. I would like to share a few words about myself. I am an ambitious, creative and hardworking person who loves solving complex math and logic problems. I like to learn something new and try myself in different directions. Currently, my biggest interest is programming. I recently wrote my first website - an online snowboard store and now I can confidently say that I am a Front-End developer. I also have many different hobbies; I am professionally involved in sports and dancing.",
+    "Participant2Position": "Front-end Developer",
+    "Participant3Description": "I'm Umida Abdugafurova. A Junior Front-End Developer, based in Uzbekistan. I have experience with HTML, CSS, SCSS, JavaScript, TypeScript, Vue Js, React, Redux, React Query, Redux Toolkit, REST API, React Hook Forms, Yup Validator, Git, and Next js. I have 1 year experience in UIC company in Tashkent. I have a lot of hobbies, like swimming in pool, cooking and hand made decorations.",
+    "Participant3Position": "Front-end Developer",
+    "switcher-label": "Language",
+    "english-value": "English",
+    "russian-value": "Russian",
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up",
+    "sign-out": "Sign Out",
+    "main-page": "Main Page",
+    "rest-client": "REST Client",
+    "graphiql-client": "GraphiQL Client",
+    "history": "History"
+  },
+  "Signin": {
+    "sign-in-text": "Already have an account?",
+    "sign-in-info": "Sign in with your email and password",
+    "email": "Email",
+    "password": "Password",
+    "sign-in": "SIGN IN"
+  },
+  "Signup": {
+    "signup-text": "Don't have an account?",
+    "sign-up-info": "Sign up with your email and password",
+    "name": "Display Name",
+    "email": "Email",
+    "password": "Password",
+    "confirm-password": "Confirm Password",
+    "sign-up": "SIGN-UP"
+  },
+  "RestClient": {
+    "response": "Response",
+    "key": "Key",
+    "value": "Value",
+    "send": "Send",
+    "addHeader": "Add",
+    "status": "Status",
+    "headers": "Headers",
+    "body": "Body",
+    "paramsHeaders": "Params Headers",
+    "paramsBody": "Params Body",
+    "params": "Params",
+    "paramsVariables": "Params Variables",
+    "clear": "Clear",
+    "none": "None",
+    "json": "JSON",
+    "text": "Text",
+    "variables": "Variables",
+    "variable": "Variable",
+    "showVariables": "Show Variables",
+    "edit": "Edit",
+    "keyExist": "Key already exists",
+    "variableExist": "Variable already exists",
+    "query": "Query"
+  },
+  "LoaderPage": {
+    "cancel": "Cancel"
+  },
+  "History": {
+    "noHistory": "You haven't executed any requests\nIt's empty here. Try:",
+    "rest-client": "REST Client",
+    "graphiql-client": "GraphiQL Client",
+    "historyRequest": "History Requests",
+    "method": "Method",
+    "url": "URL",
+    "date": "Date"
+  }
+}

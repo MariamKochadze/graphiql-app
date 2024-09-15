@@ -1,0 +1,189 @@
+'use client';
+import {
+  Box,
+  Button,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import { useAppSelector, useAppDispatch } from '../../hooks/useStoreHooks';
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { falsyValues } from '@app/common/constants';
+import { setShowVariables } from '@store/features/response/paramSlice';
+import { setNewResponse } from '@store/features/response/responseSlice';
+
+export default function Variables() {
+  const [editInput, setEditInput] = useState({ key: '', edit: false });
+  const [error, setError] = useState('');
+  const dispatch = useAppDispatch();
+  const { showVariables } = useAppSelector(state => state.params);
+  const t = useTranslations('RestClient');
+  const { variables } = useAppSelector(state => state.response);
+  const [inputKey, setInputKey] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
+  function setVariables(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (inputKey && inputValue) {
+      let key: string = inputKey;
+      let value: string = inputValue;
+      if (!parseFloat(value) && (!value.startsWith('"') || !value.endsWith('"')) && !falsyValues.includes(value)) {
+        if (!value.startsWith('"')) {
+          value = `"${value}`;
+        }
+        if (!value.endsWith('"')) {
+          value = `${value}"`;
+        }
+      }
+
+      key = key.replace(new RegExp(' ', 'g'), '_');
+      const variableNew = { ...variables };
+      if (editInput.edit) {
+        delete variableNew[editInput.key];
+        setEditInput({ key: '', edit: false });
+      }
+      if (!variableNew[key]) {
+        variableNew[key] = value;
+        dispatch(
+          setNewResponse({
+            variables: variableNew,
+          })
+        );
+        setError('');
+      } else {
+        setError(`${key} ${t('variableExist')}`);
+      }
+
+      setInputKey('');
+      setInputValue('');
+    }
+  }
+
+  function handleEditVariable(key: string) {
+    setInputKey(key);
+    setInputValue(variables[key]);
+    setEditInput({ key, edit: true });
+  }
+
+  function handleDeleteVariable(key: string) {
+    const variableNew = { ...variables };
+    delete variableNew[key];
+    dispatch(
+      setNewResponse({
+        variables: variableNew,
+      })
+    );
+  }
+
+  return (
+    <Box
+      sx={{
+        height: 250,
+        overflowY: 'scroll',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1,
+        borderTop: '1px solid var(--color-gray)',
+      }}
+    >
+      <Typography sx={{ color: 'var(--color-purple)' }}>{t('paramsVariables')}</Typography>
+      <form onSubmit={setVariables} className="flex flex-row w-full relative pb-5">
+        <input
+          type="text"
+          list="headers"
+          placeholder={t('variable')}
+          value={inputKey}
+          onChange={e => setInputKey(e.target.value)}
+          required
+          className="outline-none w-full h-10 border border-gray-400 px-5 transition duration-300 bg-gray-400 focus:border-purple-500 focus:bg-white hover:border-purple-500"
+        />
+        <input
+          type="text"
+          placeholder={t('value')}
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
+          required
+          className="outline-none w-full h-10 border border-gray-400 px-5 transition duration-300 bg-gray-400 focus:border-purple-500 focus:bg-white hover:border-purple-500"
+        />
+        <Button
+          variant="text"
+          type="submit"
+          sx={{ color: 'var(--color-purple)', border: '1px solid var(--color-purple)', width: '250px' }}
+        >
+          {editInput.edit ? t('edit') : t('addHeader')}
+        </Button>
+        <p className="w-full text-color-red size-4 text-center absolute bottom-0">{error ? error : ''}</p>
+      </form>
+      <div className="flex row mx-2 items-center">
+        <Switch
+          data-testid="showVariables"
+          id="showVariables"
+          checked={showVariables}
+          onChange={e => dispatch(setShowVariables(e.target.checked))}
+        />
+        <label htmlFor="showVariables">{t('showVariables')}</label>
+      </div>
+      {Object.keys(variables).length !== 0 && showVariables && (
+        <div>
+          <TableContainer
+            sx={{ borderRadius: '10px', border: '1px solid var(--color-purple)', width: 'calc(100% - 2px)' }}
+          >
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t('variable')}</TableCell>
+                  <TableCell>{t('value')}</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Object.keys(variables)
+                  .map(key => (
+                    <TableRow key={key} sx={{ color: 'var(--color-purple)' }}>
+                      <TableCell sx={{ color: 'var(--color-purple)' }}>
+                        <input
+                          className="focus:outline-none hover:outline-none w-full h-full hover:border-t-light-blue hover:rounded-md"
+                          type="text"
+                          value={key}
+                          name={key}
+                          readOnly
+                        />
+                      </TableCell>
+                      <TableCell sx={{ color: 'var(--color-purple)' }}>
+                        <input
+                          className="focus:outline-none hover:outline-none w-full h-full hover:border-t-light-blue hover:rounded-md"
+                          type="text"
+                          value={variables[key]}
+                          name={variables[key]}
+                          readOnly
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Button sx={{ color: 'var(--color-purple)' }} onClick={() => handleDeleteVariable(key)}>
+                          {t('clear')}
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          sx={{ color: 'var(--color-purple)' }}
+                          onClick={() => handleEditVariable(key)}
+                        >
+                          {t('edit')}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                  .reverse()}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+      )}
+    </Box>
+  );
+}

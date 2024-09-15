@@ -1,0 +1,26 @@
+{
+  "editor.formatOnSave": true,
+  "[typescript][typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "cSpell.words": [
+    "atmosphering",
+    "codemirror",
+    "homeworld",
+    "hyperdrive",
+    "karuk",
+    "MGLT",
+    "reduxjs",
+    "Skywalker",
+    "starships",
+    "starwars-visualguide",
+    "stylelint",
+    "svgr",
+    "SWAPI",
+    "testid",
+    "testvariable",
+    "Toastify"
+  ]
+}
