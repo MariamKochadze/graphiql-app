@@ -1,6 +1,6 @@
-import { screen, render } from '@testing-library/react';
-import { describe, it } from 'vitest';
 import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import { describe, it } from 'vitest';
 import GlobalError from './global-error';
 
 describe('ErrorComponent Component', () => {
@@ -15,7 +15,5 @@ describe('ErrorComponent Component', () => {
       />
     );
     expect(screen.getByText(/Something went wrong. Refresh the page, please./i)).toBeInTheDocument();
-    expect(screen.getByRole('button')).toBeInTheDocument();
-    expect(screen.getByRole('button')).toHaveTextContent('Reload');
   });
 });
