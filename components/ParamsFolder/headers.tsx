@@ -11,14 +11,16 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useAppSelector } from '../../hooks/useStoreHooks';
+import { useAppSelector, useAppDispatch } from '../../hooks/useStoreHooks';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { base64Route } from '@components/Base64Route/Base64Route';
 import { usePathname } from 'next/navigation';
+import { setNewResponse } from '@store/features/response/responseSlice';
 
 export default function Headers() {
+  const dispatch = useAppDispatch();
   const [editInput, setEditInput] = useState({ key: '', edit: false });
   const [error, setError] = useState('');
   const pathname = usePathname();
@@ -48,6 +50,11 @@ export default function Headers() {
         responseNew.headers = headerNew;
         const route = base64Route(responseNew);
         const lang = pathname.split('/')[1];
+        dispatch(
+          setNewResponse({
+            headers: headerNew,
+          })
+        );
         router.push(`/${lang}${route}`);
         setError('');
       } else {
@@ -66,6 +73,11 @@ export default function Headers() {
     delete headerNew[key];
     const responseNew = { ...response };
     responseNew.headers = headerNew;
+    dispatch(
+      setNewResponse({
+        headers: headerNew,
+      })
+    );
     const route = base64Route(responseNew);
     const lang = pathname.split('/')[1];
     router.push(`/${lang}${route}`);

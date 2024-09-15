@@ -10,6 +10,7 @@ const Logo = ({ isSticky }: LogoProps) => {
       width="109"
       height="32"
       fill="none"
+      data-testid="icon-logo"
     >
       <path
         fill="url(#logo-text_svg__a)"

@@ -41,7 +41,6 @@ vi.mock('next/navigation', () => ({
 describe('Signup Component', () => {
   it('renders Signup component correctly', async () => {
     renderWithProviders(<SignUpForm />);
-    screen.debug();
     expect(screen.getByText(english['Signup']['email'])).toBeInTheDocument();
     expect(screen.getByText(english['Signup']['password'])).toBeInTheDocument();
     expect(screen.getByText(english['Signup']['confirm-password'])).toBeInTheDocument();

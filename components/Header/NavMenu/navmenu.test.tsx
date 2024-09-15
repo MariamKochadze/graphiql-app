@@ -22,7 +22,7 @@ vi.mock('next/navigation', () => ({
 
 describe('AdaptiveMenu Component', () => {
   it('renders NavMenu component correctly', async () => {
-    render(<NavMenu user={null} onSignOut={vi.fn()} />);
+    render(<NavMenu user={null} onSignOut={vi.fn()} isSticky={false} />);
     const user = userEvent.setup();
     expect(screen.getByText(english['HomePage']['sign-in'])).toBeInTheDocument();
     expect(screen.getByText(english['HomePage']['sign-up'])).toBeInTheDocument();

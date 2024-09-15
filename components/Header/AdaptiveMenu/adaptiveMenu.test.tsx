@@ -23,7 +23,11 @@ vi.mock('next/navigation', () => ({
 describe('AdaptiveMenu Component', () => {
   it('renders AdaptiveMenu component correctly', async () => {
     render(
-      <AdaptiveMenu user={{ uid: '123', displayName: 'John Doe', email: 'n9KJn@example.com' }} onSignOut={vi.fn()} />
+      <AdaptiveMenu
+        user={{ uid: '123', displayName: 'John Doe', email: 'n9KJn@example.com' }}
+        onSignOut={vi.fn()}
+        isSticky={false}
+      />
     );
     const user = userEvent.setup();
     const btn = screen.getByRole('button');
@@ -35,7 +39,7 @@ describe('AdaptiveMenu Component', () => {
   });
 
   it('renders AdaptiveMenu component correctly', async () => {
-    render(<AdaptiveMenu user={null} onSignOut={vi.fn()} />);
+    render(<AdaptiveMenu user={null} onSignOut={vi.fn()} isSticky={false} />);
     const user = userEvent.setup();
     const btn = screen.getByRole('button');
     await user.click(btn);

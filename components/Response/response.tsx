@@ -35,11 +35,6 @@ export default function Response({
     body: body || '',
     clientType,
   };
-  dispatch(
-    setNewResponse({
-      headers: headers,
-    })
-  );
 
   const colorStatus: string = httpColors[response.status.toString()[0]];
 
