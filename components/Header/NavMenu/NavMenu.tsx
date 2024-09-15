@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import { SimpleUser } from '@store/userSlice';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 
 interface UserProps {
   user: SimpleUser | null;
@@ -14,7 +14,7 @@ const NavMenu = ({ onSignOut, user, isSticky }: UserProps) => {
   const router = useRouter();
 
   const handleButtonClick = () => {
-    router.push('/authentication');
+    router.push('en/authentication');
   };
   return (
     <nav className="md:flex hidden">
