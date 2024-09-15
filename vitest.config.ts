@@ -25,6 +25,8 @@ export default defineConfig({
         '**/postcss.config.js',
         '**/tailwind.config.cjs',
         '**/tailwind.config.js',
+        '**/middleware.ts',
+        '**/i18n.ts',
       ],
     },
     alias: {
