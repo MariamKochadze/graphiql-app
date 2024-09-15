@@ -91,6 +91,7 @@ export default function Response({
           }}
         >
           <CodeMirror
+            className="min-h-full"
             readOnly
             theme={jsonTheme}
             value={JSON.stringify(response.response, null, 2)}

@@ -1,9 +1,9 @@
 'use client';
 import { Button } from '@mui/material';
-import { useAppSelector } from 'hooks/useStoreHooks';
+import { useAppSelector } from '@hooks/useStoreHooks';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { selectUser } from 'store/selectors';
+import { selectUser } from '@store/selectors';
 import { Link } from '../../navigation';
 import Gif from '../../public/assets/video_gif.gif';
 
